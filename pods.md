@@ -15,8 +15,8 @@ metadata:
         tier: front-end
 spec:
     containers:
-        - name: nginx-container
-          image: nginx
+    - name: nginx-container
+      image: nginx
 ```
 kubeclt create -f pod-definition.yml
 kubectl apply -f pod-definition.yml
@@ -26,3 +26,13 @@ kubectl describe pod <pod name>
 
 # Delete Pod
 kubectl delete pod <pod name>
+
+## Generate POD Manifest YAML file (-o yaml). Don't create it(--dry-run)
+```
+kubectl run nginx --image=nginx --dry-run=client -o yaml
+```
+
+### The second option is to extract the pod definition in YAML format to a file using the command
+```
+kubectl get pod webapp -o yaml > my-new-pod.yaml
+```
