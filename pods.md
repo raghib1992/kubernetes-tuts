@@ -3,7 +3,7 @@ kubectl run <name of the pod> --image <name of the image>
 # Get the list of pods
 kubectl get pods
 # pods yaml file
-pod-definition.yml
+## pod-definition.yml
 ```
 apiVersion: v1
 kind: Pod
@@ -17,6 +17,10 @@ spec:
     containers:
     - name: nginx-container
       image: nginx
+      command:
+      - sleep
+      - "1000"
+    schedulerName: my-custom-scheduler
 ```
 kubeclt create -f pod-definition.yml
 kubectl apply -f pod-definition.yml
