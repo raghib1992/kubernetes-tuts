@@ -19,15 +19,38 @@ Ref: tar xzvf etcd v3.3.11 linux amd64.tar.gz
 
 ## Setup ETCD from scratch
 ### Downaload binaries
+```
 wget -q --https-only \
 "https://github.com/coreos/etcd/releases/download/v3.3.9/etcd-v3.3.9-linux-amd64.tar.gz"
-### Kubeadm deploy ETCD server as a POD in Kubesystem namespace
+tar -xvf etcd-v3.3.9-linux-amd64.tar.gz
+mv etcd-v3.3.9-linux-amd64/etcd* /usr/local/bin/
+mkdir -p /etc/etcd /var/lib/etcd
+cp ca.pem kubernetes-key.pem kubernetes.pem /etc/etcd/
+```
+### info in etcd.service about its peer
+```
+--
+initial cluster controller 0=https://${CONTROLLER0_IP}:2380,controller 1=https://${CONTROLLER1_IP}:2380
+```
+### ETCDCTL
+```
+export ETCDCTL_API=3
+etcdctl put name john
+etcdctl get name
+etcdctl get / --prefix --keys-only
+```
+
+## Kubeadm deploy ETCD server as a POD in Kubesystem namespace
+```
 kubectl get pods -n kube-system
 kubectl exec etcd-master -n kube-system etcdctl get / --prefix -keys-only  ## to list all keys
+```
 
 ## In HA, there will be more than one ETCD server
 ## All must about each other by setting parameter
+```
 --initial-cluster controller-0=https://${CONTROLLER0_IP}:2380,controller-1=https://${CONTROLLER1_IP}:2380 \\
+```
 
 # ETCDCTL is the CLI tool used to interact with ETCD.
 
@@ -63,3 +86,4 @@ export ETCDCTL_API=3
 ```
 kubectl exec etcd-master -n kube-system -- sh -c "ETCDCTL_API=3 etcdctl get / --prefix --keys-only --limit=10 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt  --key /etc/kubernetes/pki/etcd/server.key" 
 ```
+********************************

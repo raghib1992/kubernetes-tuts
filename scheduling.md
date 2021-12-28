@@ -27,9 +27,23 @@ metadata:
 target:
     apiVersion: v1
     kind: Node
-    name: node02
+    name: worker-1
 ```
 Convert the yaml into equivalent JSON format
 ```
-curl --header "Content-Type:application/json" --request POST --data '{"apiVersion: "v1", "kind": "Binding", "metadata": {"name": "nginx"}, "target": {"apiVersion": "v1", "kind": "Node", "name": "node01"}}' http://$SERVER/api/v1/namespaces/default/pods/$PODNAME/binding/
+curl --header "Content-Type:application/json" --request POST --data '{
+  "apiVersion": "v1",
+  "kind": "Binding",
+  "metadata": {
+    "name": "nginx"
+  },
+  "target": {
+    "apiVersion": "v1",
+    "kind": "Node",
+    "name": "worker-1"
+  }
+}' https://192.168.5.11:6443/api/v1/namespaces/default/pods/nginx/binding/ \
+--key admin.key \
+--cert admin.crt \
+--cacert ca.crt
 ```

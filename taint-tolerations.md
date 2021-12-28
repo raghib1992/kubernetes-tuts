@@ -4,7 +4,9 @@
 ## Commands
 ```
 kubectl taint nodes <node-name> <key>=<value>:<taint-effect>
-kubectl describe node kubemaster | grep Taint
+kubectl taint nodes worker-1 tier=prod:PreferNoSchedule
+kubectl describe node <node name> | grep Taints
+kubectl describe node worker-1 | grep Taints
 ```
 
 ## taint-effect:
@@ -12,9 +14,9 @@ kubectl describe node kubemaster | grep Taint
 ### PreferNoSchedule
 ### NoExecute
 
- ## tolearation to pod
- pod-definition.yaml
- ```
+## tolearation to pod
+pod-definition.yaml
+```
 apiVersion: v1
 kind: Pod
 metadata:

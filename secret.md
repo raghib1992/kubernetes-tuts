@@ -60,9 +60,9 @@ spec:
       command:
       - sleep
       - "1000"
-    envFrom:
+      envFrom:
       - secretRef:
-        name: app-secret
+          name: app-secret
 ```
 ```
 env:

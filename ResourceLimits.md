@@ -19,7 +19,7 @@ spec:
         memory: "1Gi"
         cpu: 1
 ```
-## CPU 0.1=100 milli (lowest unit)
+## CPU 0.1=100 milli (lowest value can select is 1 unit)
 ## mem 256 Mi
 ### 1 G (Gigabyte)  = 1,000,000,000 bytes
 ### 1 M (Megabyte) = 1,000,000 bytes

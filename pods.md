@@ -40,3 +40,32 @@ kubectl run nginx --image=nginx --dry-run=client -o yaml
 ```
 kubectl get pod webapp -o yaml > my-new-pod.yaml
 ```
+**********************************************
+# complete pod-definition.yaml
+```
+apiVersion: v1
+kind: Pod
+metadata:
+    name: myapp-pod
+    labels:
+        app: web
+        env: prod
+        tier: front-end
+spec:
+    containers:
+    - name: nginx-container
+      image: nginx
+      command:
+      - sleep
+      - "1000"
+    schedulerName: my-custom-scheduler
+    nodeName: worker-1
+    tolerations:
+    - key: "env"
+      operator: "equal"
+      value: "prod"
+      effect: "preferNoSchedule"
+    nodeSelector:
+      type: special
+    serviceAccountName: <sa-name>
+```

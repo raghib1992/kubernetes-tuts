@@ -12,7 +12,7 @@ openssl genrsa -out nadim.key 2048
 ```
 openssl req -new -key nadim.key -subj "/CN=nadim" -out nadim.csr
 ```
-### admin take the key and create acertificate signing request object
+### admin take the key and create a certificate signing request object
 #### object created by manifest file
 #### nadim-csr.yaml
 ```
