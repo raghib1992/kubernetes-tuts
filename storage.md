@@ -45,3 +45,8 @@ spec:
         requests:
             storage: 500Mi
 ```
+## Delete Aurora DB cluster
+```
+aws rds describe-db-clusters --db-cluster-identifier aurora-db-cluster --output text \
+  --query '*[].["Cluster:",DBClusterIdentifier,DBClusterMembers[*].["Instance:",DBInstanceIdentifier,IsClusterWriter]]
+Cluster:        deleteme-zero-instances

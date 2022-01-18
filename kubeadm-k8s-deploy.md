@@ -115,7 +115,7 @@ sudo apt-mark hold kubelet kubeadm kubectl
 ## Creating a cluster using kubeadm
 ## Initializing your control-plane node
 ```
-kubeadm init --pod-network-cidr 10.244.0.0/16 --apiserver-advertise-address=192.168.56.2
+kubeadm init --pod-network-cidr 10.244.0.0/16 --apiserver-advertise-address=172.31.37.12
 ```
 ## Become regular user
 ## run following command, as regular user
@@ -127,7 +127,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 ## copy the command to join worker node to the cluster, run on each worker node
 ```
-kubeadm join 192.168.56.2:6443 --token 6m8ty5.8w92yelljar81528 \
+kubeadm join 65.1.145.154:6443 --token 6m8ty5.8w92yelljar81528 \
         --discovery-token-ca-cert-hash sha256:028aaabaa2a91a68b4991fb6cb8106ab105f1532ab36c40d12912bb5aace4058
 ```
 **********************************************************

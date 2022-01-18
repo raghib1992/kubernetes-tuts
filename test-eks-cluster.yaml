@@ -1,0 +1,11 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: eks-test
+  region: ap-south-1
+
+nodeGroups:
+  - name: eks-test-ng
+    instanceType: t3.micro
+    desiredCapacity: 2
