@@ -1,7 +1,11 @@
 # Auth mechanism-basic
-
+kubeapi auth mechanism
+1. static password file
+2. static token file
+3. certificates
+4. Identity services
 ## Create user details csv file
-### user-details.csv
+### file -user-details.csv
 ```
 password123,user1,u0001
 password123,user2,u0002

@@ -30,6 +30,9 @@ spec:
     request:
       < cat nadim.csr | base 64 >
 ```
+```
+cat nadim.csr | base64 | tr -d "\n"
+```
 ### status of the obejct seem by admin by
 ```
 kubectl get csr

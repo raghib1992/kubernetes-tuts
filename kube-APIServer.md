@@ -3,16 +3,22 @@
 ```
 kubectl get pods -n kube-system
 ```
- 
- ## pod definition file located at
- ```
- cat /etc/kubernetes/manifests/kube-apiserver.yaml
- ```
- ## In  non-kubeadm setup, we can view the apiserver service
- ```
- cat /etc/systemd/system/kube-apiserver.service
- ```
+
+## pod definition file located at
+```
+cat /etc/kubernetes/manifests/kube-apiserver.yaml
+```
+
+## In  non-kubeadm setup, we can view the apiserver service
+```
+cat /etc/systemd/system/kube-apiserver.service
+```
+
 ## Running process
 ```
 ps -aux | grep kube-apiserver
 ```
+
+
+ 
+

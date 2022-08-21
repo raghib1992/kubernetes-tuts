@@ -5,22 +5,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: myapp-deployment
-    type: front-end
-specs:
+    namespace: finance
+    name: john-deployment
+    labels:
+      app: busybox
+spec:
     template:
         metadata:
             name: myapp-pod
-            env: prod
-            tier: frontend
-        specs:
+            labels:
+              app: busybox
+        spec:
             containers:
-                - name: nginx-contorller
-                  image: ngins
-    replication: 3
+                - name: busybox
+                  image: busybox
+                  command: ["/bin/sh", "-ec", "while :; do echo '.';sleep 5 ; done" ]
+    replicas: 2
     selector:
         matchLabels:
-            tier: front-end
+          app: busybox
 ```
 ## command to run deployment
 ```
