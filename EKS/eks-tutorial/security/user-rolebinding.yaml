@@ -32,7 +32,7 @@ roleRef:
   kind: Role
   name: deployment-role
 subjects:
-  - kind: User
-    name: developerbob
+  - kind: Group
+    name: developer
     apiGroup: ""
 

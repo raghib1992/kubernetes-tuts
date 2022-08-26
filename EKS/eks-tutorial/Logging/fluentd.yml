@@ -4,7 +4,8 @@ metadata:
   name: fluentd
   namespace: kube-system
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
+# rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
   name: fluentd
@@ -14,9 +15,10 @@ rules:
   resources:
   - namespaces
   - pods
-  verbs: ["get", "list", "watch"]
+  verbs: ["get", "list", "watch", create, delete, update]
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
+# rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
   name: fluentd
@@ -197,9 +199,9 @@ spec:
         image: fluent/fluentd-kubernetes-daemonset:v1.1-debian-cloudwatch
         env:
           - name: REGION
-            value: us-west-2
+            value: us-east-1
           - name: CLUSTER_NAME
-            value: eks-loggingtest
+            value: attractive-gopher
         resources:
           limits:
             memory: 200Mi

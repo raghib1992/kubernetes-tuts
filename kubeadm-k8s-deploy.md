@@ -63,7 +63,7 @@ sudo systemctl enable --now kubelet
 ## Creating a cluster using kubeadm
 ## Initializing your control-plane node
 ```
-kubeadm init --pod-network-cidr 10.244.0.0/16 --apiserver-advertise-address=172.31.40.209
+kubeadm init --pod-network-cidr 10.244.0.0/16 --apiserver-advertise-address=172.31.38.103
 ```
 # Post installation task only on master
 
