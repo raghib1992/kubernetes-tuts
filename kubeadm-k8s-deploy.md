@@ -33,7 +33,12 @@ sudo sysctl --system
 
 # Install Container Runtime in all the nodes
 ## Ref - https://docs.docker.com/engine/install/
-
+```
+sudo yum install -y docker
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo systemctl status docker
+```
 
 # Install Kubeadm only on all nodes
 ## Ref - https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
@@ -62,8 +67,9 @@ sudo systemctl enable --now kubelet
 ## Ref https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
 ## Creating a cluster using kubeadm
 ## Initializing your control-plane node
+##### edit apiserver-advertise-address
 ```
-kubeadm init --pod-network-cidr 10.244.0.0/16 --apiserver-advertise-address=172.31.38.103
+sudo kubeadm init --pod-network-cidr 10.244.0.0/16 --apiserver-advertise-address=172.31.38.103
 ```
 # Post installation task only on master
 

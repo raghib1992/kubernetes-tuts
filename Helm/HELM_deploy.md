@@ -20,17 +20,4 @@ cluster-admni
 kubectl create clusterrolebinding tiller-role-binding --clusterrole cluster-admin --serviceaccount=kube-system:tiller
 ```
 
-### Usefull command
-```
-helm help
-helm install --values --name
-helm fetch (fetch the chart locally to your machine)
-helm list (list installed application)
-helm status (status of the application)
-helm search
-helm repo update
-helm upgrade
-helm rollback
-helm delete --purge
-helm reset
-```
+s
