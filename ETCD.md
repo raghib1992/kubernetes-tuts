@@ -1,15 +1,18 @@
 # ETCD
+## Ref https://etcd.io/docs/v3.2/install/
 
 ## Install ETCD
 ### Download Binaries
-Ref: curl -L https://github.com/etcd io/etcd/releases/download/v3.3.11/etcd-v3.3.11 linux amd64.tar.gz o etcd v3.3.11 linux amd64.tar.gz
+curl -L https://github.com/etcd-io/etcd/releases/download/v3.3.11/etcd-v3.3.11-linux-amd64.tar.gz -o etcd-v3.3.11-linux-amd64.tar.gz
 ### Extract
 Ref: tar xzvf etcd v3.3.11 linux amd64.tar.gz
 ### Run ETCD Service
 ./ etcd
 
 ## By default listen on port 2379
+
 ## By default client come with ETCD is ETCD control client
+./etcdctl
 ### To store Key value pair
 ./etcdctl set key1 value1
 ### TO retrieve the data
