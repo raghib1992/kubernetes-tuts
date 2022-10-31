@@ -35,3 +35,24 @@ containers:
 ## can provide values which over written the values.yaml file
 helm install --values=my-values.yaml <chart name>
 helm install --set containers.port=8090 <chart name>
+
+*******************************************************
+Helm install
+
+1. load all the chart and its dependencies
+2. parse values.yaml
+3. Generate the  yaml file
+4. parse the yaml to kube object and validate
+5. Generate YAML and send to kube
+
+
+
+
+
+
+
+
+
+
+
+

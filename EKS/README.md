@@ -58,3 +58,9 @@ CloudWatch logging will not be enabled for cluster "attractive-gopher" in "us-ea
 ***********************
 install network policy agent on eks calico
 ref https://docs.aws.amazon.com/eks/latest/userguide/calico.html
+
+***************************************
+```
+eksctl scale nodegroup --cluster=test-cluster --nodes=4 --name=ng-e5d1685d --nodes-min=1 --nodes-max=5
+eksctl scale nodegroup --cluster=test-cluster --node-type=t5.xlarge --name=ng-e5d1685d
+```

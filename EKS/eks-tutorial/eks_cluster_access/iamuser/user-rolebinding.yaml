@@ -3,7 +3,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: deployment-role
-  namespace: frontend
+  namespace: team-a
 rules:
   - apiGroups:
       - ""
@@ -26,13 +26,13 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: deployment-rolebinding
-  namespace: frontend
+  namespace: team-a
 roleRef:
   apiGroup: ""
   kind: Role
   name: deployment-role
 subjects:
   - kind: Group
-    name: developer
+    name: Developers
     apiGroup: ""
 
