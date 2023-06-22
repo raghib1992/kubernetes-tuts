@@ -15,7 +15,9 @@ helm repo update
 ## to remove the repo
 helm repo remove <repo name>
 helm repo remove bitnami
+
 ******************
+
 ## TO search all the chart in repo
 helm search repo
 helm search repo <repo name>
@@ -36,6 +38,7 @@ helm delete <chart name>
 helm install <release name> <repo> <chart name>
 helm install testjenkins-1 stable/jenkins
 helm install apache bitnami/apache --namespace web
+helm install mydb bitnami/mysql
 
 ## Upgrade Chart
 helm upgrade apache bitname/apache --namespace web
