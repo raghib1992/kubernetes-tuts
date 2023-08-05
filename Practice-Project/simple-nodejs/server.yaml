@@ -21,12 +21,12 @@ spec:
           envFrom:
             - configMapRef:
                 name: server-configmap2
-          # env:
-          #   - name: REDIS_HOST
-          #     valueFrom:
-          #       configMapKeyRef:
-          #         name: server-configmap
-          #         key: redis_host
+          env:
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgpassword
+                  key: PGPASSWORD
 
           #   - name: REDIS_PORT
           #     valueFrom:
@@ -65,15 +65,15 @@ spec:
   ports:
     - targetPort: 5000
       port: 5000
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: server-configmap
-data:
-  redis_host: redis-clusterip
-  redis_port: 6379
-  pg_user: postgres
-  pg_host: postgres-clusterip
-  pg_port: 5432
-  pg_database: postgres
+# ---
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: server-configmap
+# data:
+#   redis_host: redis-clusterip
+#   redis_port: 6379
+#   pg_user: postgres
+#   pg_host: postgres-clusterip
+#   pg_port: 5432
+#   pg_database: postgres
