@@ -26,3 +26,5 @@ minikube addons enable ingress
 
 ### To get minikube ip
 minikube ip
+
+kubectl get po -l app=web
