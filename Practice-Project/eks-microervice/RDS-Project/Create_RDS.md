@@ -76,7 +76,8 @@ metadata:
   name: mysql
 spec:
   type: ExternalName
-  externalName: usermgmtdb.c7hldelt9xfp.us-east-1.rds.amazonaws.com
+  # Update external name i.e rds endpoint info
+  externalName: usermgmtdb.c7hldelt9xfp.us-east-1.rds.amazonaws.com 
 ```
  - **Deploy Manifest**
 ```

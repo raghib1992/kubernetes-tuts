@@ -1,31 +1,28 @@
-EKS CLuster Pricing
-$0.10 per hour for each amazon eks cluster and $2.4 per day and $30 for month
-Worker Node Pricing
-T3 medium Server
-$0.0416 per hour and $1 for per day 
-
-# delete EKs Cluster
+# EKS Cluster
+    - EKS CLuster
+    - Worker Nodegroup
+    - Fargate Profile
+    - VPC
+    - RDS
+    - ALb ingress
+## delete EKs Cluster
+```
 eksctl delete cluste <clustername>
 eksctl delete nodegroup --cluster=<cluster name> --name=<nodegroup name>
-
-Ref github repo for EKS
-
-
-AWS EKS Kubernetes - Masterclass
-
-https://github.com/stacksimplify/aws-eks-kubernetes-masterclass
-
-Docker Fundamentals
-
-https://github.com/stacksimplify/docker-fundamentals
-
-Kubernetes Fundamentals
-
-https://github.com/stacksimplify/kubernetes-fundamentals
+```
+*****
+## Ref github repo for EKS
+ - AWS EKS Kubernetes - Masterclass
+    - https://github.com/stacksimplify/aws-eks-kubernetes-masterclass
+ - Docker Fundamentals
+    - https://github.com/stacksimplify/docker-fundamentals
+ - Kubernetes Fundamentals
+    - https://github.com/stacksimplify/kubernetes-fundamentals
 
 
+## Create EKS Cluster
+ - https://github.com/raghib1992/aws-eks-kubernetes-masterclass
 
-https://github.com/raghib1992/aws-eks-kubernetes-masterclass
 Step 01 Install AWS CLI
 
 Step 02 Install Kubectl
@@ -38,33 +35,63 @@ eksctl create cluster --name=eksdemo1 --region=ap-south-1 --zones=ap-south-1a,ap
 Step 05 Create and Associate IAM OIDC Provider for our EKS cluster
 eksctl utils associate-iam-oidc-provider --region ap-south-1 --cluster eksdemo1 --approve
 
-Step 06 Create EC2 Key Pair
-name kube-demo
+### **Step 06 Create EC2 Key Pair**
+- name kube-demo
 
-Step-07: Create Node Group with additional Add-Ons in Public Subnets
+
+### **Step-07: Create Node Group with additional Add-Ons in Public Subnets**
+```
 # Create Public Node Group   
-eksctl create nodegroup --cluster=eksdemo1 --region=ap-south-1 --name=eksdemo1-ng-public1 --node-type=t3.medium --nodes=2 --nodes-min=2 --nodes-max=4 --node-volume-size=20 --ssh-access --ssh-public-key=kube-demo --managed --asg-access --external-dns-access --full-ecr-access --appmesh-access --alb-ingress-access
 
-Step 08: Verify Cluster and Nodes
+eksctl create nodegroup --cluster=eksdemo1 --region=ap-south-1 --name=eksdemo1-ng-public1 --node-type=t3.medium --nodes=2 --nodes-min=2 --nodes-max=4 --node-volume-size=20 --ssh-access --ssh-public-key=kube-demo --managed --asg-access --external-dns-access --full-ecr-access --appmesh-access --alb-ingress-access
+```
+
+```
+# Create Nodegroup in Private subnet
+
+eksctl create nodegroup --cluster=eksdemo1 --region=us-east-1 --name=eksdemo1-ng-private1 --node-type=t3.medium --nodes-min=2 --nodes-max=4 --node-volume-size=20 --ssh-access --ssh-public-key=kube-demo --managed --asg-access --external-dns-access --full-ecr-access --appmesh-access --alb-ingress-access --node-private-networking   
+```
+### **Subnet Route Table Verification - Outbound Traffic goes via NAT Gateway**
+1. Verify the node group subnet routes to ensure it created in private subnets
+2. Go to Services -> EKS -> eksdemo -> eksdemo1-ng1-private
+3. Click on Associated subnet in **Details** tab
+4. Click on **Route Table** Tab.
+5. We should see that internet route via NAT Gateway (0.0.0.0/0 -> nat-xxxxxxxx)
+
+### **Step 08: Verify Cluster and Nodes**
 1. Verify EKS Nodegroup Subnet, asg, Networking, logging (by default disable)
 2. Worker node IAM role and policies
 3. Check cloudformation
 4. Check Security Group
 5. List EKS clusters
+```
 eksctl get cluster
-
+```
 6. List NodeGroups in a cluster
+```
 eksctl get nodegroup --cluster=<clusterName>
+```
+7. Get NodeGroups in a EKS Cluster
+```
+eksctl delete nodegroup <NodeGroup-Name> --cluster <Cluster-Name>
+eksctl delete nodegroup eksdemo1-ng-public1 --cluster eksdemo1
 
-7. List Nodes in current kubernetes cluster
+# Error: 1 pods are unevictable from node ip-192-168-35-54.ap-south-1.compute.internal
+
+eksctl delete nodegroup eksdemo1-ng-public1 --cluster eksdemo1 --drain=false --disable-eviction
+```
+8. List Nodes in current kubernetes cluster
+```
 kubectl get nodes -o wide
-
+```
 8. Our kubectl context should be automatically changed to new cluster
+```
 kubectl config view --minify
-
-Step-09: Create Resplicaset
+```
+### **Step-09: Create Resplicaset**
+```
 kubectl apply -f replicaSet.yaml
-
+```
 Step-10: Expose replicaSet using NodePort
 kubectl expose rs my-helloworld-rs --type=NodePort --port=80 --name=my-helloworld-service
 
@@ -126,3 +153,10 @@ kind: Namespace
 metadata:  
     name: dev
 ```
+
+## EKS CLuster Pricing
+
+- $0.10 per hour for each amazon eks cluster and $2.4 per day and $30 for month
+- Worker Node Pricing
+    - T3 medium Server
+    - $0.0416 per hour and $1 for per day 
