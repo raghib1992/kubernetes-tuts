@@ -111,3 +111,18 @@ kubectl rollout resume deployment/my-first-deployment
 Step-18: Expose deployment
 kubectl expose deployment <Deployment-Name>  --type=NodePort --port=80 --target-port=80 --name=<Service-Name-To-Be-Created>
 kubectl expose deployment my-first-deployment  --type=NodePort --port=80 --target-port=80 --name=my-first-service
+
+Step-19: Create Namespace
+kubectl get ns
+kubectl get all -n kube-system
+kubectl create ns prod
+
+
+```
+# nasmespace.yaml
+# kubectl apply -f nasmespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:  
+    name: dev
+```
