@@ -39,7 +39,7 @@ eksctl utils associate-iam-oidc-provider --region ap-south-1 --cluster eksdemo1 
 - name kube-demo
 
 
-### **Step-07: Create Node Group with additional Add-Ons in Public Subnets**
+### **Step-07: Create Node Group with additional Add-Ons in Public and Private Subnets**
 ```
 # Create Public Node Group   
 
@@ -49,7 +49,7 @@ eksctl create nodegroup --cluster=eksdemo1 --region=ap-south-1 --name=eksdemo1-n
 ```
 # Create Nodegroup in Private subnet
 
-eksctl create nodegroup --cluster=eksdemo1 --region=us-east-1 --name=eksdemo1-ng-private1 --node-type=t3.medium --nodes-min=2 --nodes-max=4 --node-volume-size=20 --ssh-access --ssh-public-key=kube-demo --managed --asg-access --external-dns-access --full-ecr-access --appmesh-access --alb-ingress-access --node-private-networking   
+eksctl create nodegroup --cluster=eksdemo1 --region=ap-south-1 --name=eksdemo1-ng-private1 --node-type=t3.medium --nodes-min=2 --nodes-max=4 --node-volume-size=20 --ssh-access --ssh-public-key=kube-demo --managed --asg-access --external-dns-access --full-ecr-access --appmesh-access --alb-ingress-access --node-private-networking   
 ```
 ### **Subnet Route Table Verification - Outbound Traffic goes via NAT Gateway**
 1. Verify the node group subnet routes to ensure it created in private subnets

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: clb-usermgmt-restapp
+  labels: 
+    app: usermgmt-restapp
+  # namespace: dev
+spec:
+  type: LoadBalancer # Regular k8s Service manifest with type as LoadBalancer create Classic LB
+  selector:
+    app: usermgmt-restapp
+  ports: 
+    - port: 80
+      targetPort: 8095
