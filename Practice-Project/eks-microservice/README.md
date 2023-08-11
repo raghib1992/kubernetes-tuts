@@ -23,18 +23,20 @@ eksctl delete nodegroup --cluster=<cluster name> --name=<nodegroup name>
 ## Create EKS Cluster
  - https://github.com/raghib1992/aws-eks-kubernetes-masterclass
 
-Step 01 Install AWS CLI
+### **Step 01 Install AWS CLI**
 
-Step 02 Install Kubectl
+### **Step 02 Install Kubectl**
 
-Step 03 Install EKSCTL
+### **Step 03 Install EKSCTL**
 
-Step 04 Create EKs cluster using eksctl
+### **Step 04 Create EKs cluster using eksctl**
+```
 eksctl create cluster --name=eksdemo1 --region=ap-south-1 --zones=ap-south-1a,ap-south-1b --without-nodegroup
-
-Step 05 Create and Associate IAM OIDC Provider for our EKS cluster
+```
+### **Step 05 Create and Associate IAM OIDC Provider for our EKS cluster**
+```
 eksctl utils associate-iam-oidc-provider --region ap-south-1 --cluster eksdemo1 --approve
-
+```
 ### **Step 06 Create EC2 Key Pair**
 - name kube-demo
 
@@ -71,7 +73,7 @@ eksctl get cluster
 ```
 eksctl get nodegroup --cluster=<clusterName>
 ```
-7. Get NodeGroups in a EKS Cluster
+7. Delete NodeGroups in a EKS Cluster
 ```
 eksctl delete nodegroup <NodeGroup-Name> --cluster <Cluster-Name>
 eksctl delete nodegroup eksdemo1-ng-public1 --cluster eksdemo1

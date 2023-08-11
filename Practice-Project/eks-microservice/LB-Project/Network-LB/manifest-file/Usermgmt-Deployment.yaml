@@ -59,4 +59,3 @@ spec:
           #   limits:
           #     cpu: '1000m' #1000m is equal to 1vcpu
           #     memory: '1Gi'
-
