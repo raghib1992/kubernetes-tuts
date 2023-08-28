@@ -39,7 +39,7 @@ metadata:
 ```
 
 ## Step-04: Create k8s objects & Test
-```
+```sh
 # Create All Objects
 kubectl apply -f kube-manifests/
 
@@ -65,7 +65,7 @@ http://<WorkerNode-Public-IP>:<NodePort>/usermgmt/health-status
 ```
 ## Step-05: Clean-Up
 - Delete all k8s objects created as part of this section
-```
+```sh
 # Delete All
 kubectl delete -f kube-manifests/
 ```
