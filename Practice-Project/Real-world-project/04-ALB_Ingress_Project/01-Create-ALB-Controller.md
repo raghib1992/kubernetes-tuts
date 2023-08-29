@@ -33,12 +33,13 @@ kubectl version
 ### Pre-requisite-2: Create EKS Cluster and Worker Nodes (if not created)
 ```sh
 # Create Cluster (Section-01-02)
-eksctl create cluster --name=eksdemo1 \
-                      --region=us-east-1 \
+eksctl create cluster --name=<value> \
+                      --region=<value> \
                       --zones=us-east-1a,us-east-1b \
                       --version="1.21" \
                       --without-nodegroup 
 
+eksctl create cluster --name=eksdemo --region=eu-north-1 --zones=eu-north-1a,eu-north-1b --without-nodegroup
 
 # Get List of clusters (Section-01-02)
 eksctl get cluster   
@@ -78,14 +79,15 @@ eksctl create nodegroup --cluster=eksdemo --region=eu-north-1 --name=eksdemo-ng-
 2. EKS Node Groups in Private Subnets
 ```sh
 # Verfy EKS Cluster
-eksctl get cluster
+eksctl get cluster --region eu-north-1
 
 # Verify EKS Node Groups
-eksctl get nodegroup --cluster=eksdemo
+eksctl get nodegroup --cluster=eksdemo --region eu-north-1
 
 # Verify if any IAM Service Accounts present in EKS Cluster
-eksctl get iamserviceaccount --cluster=eksdemo
-Observation:
+eksctl get iamserviceaccount --cluster=eksdemo --region eu-north-1
+
+#Observation:
 1. No k8s Service accounts as of now. 
 
 # Configure kubeconfig for kubectl
@@ -125,6 +127,9 @@ curl -o iam_policy_v2.3.1.json https://raw.githubusercontent.com/kubernetes-sigs
 
 # Create IAM Policy using policy downloaded
 aws iam create-policy --policy-name AWSLoadBalancerControllerIAMPolicy --policy-document file://iam_policy_latest.json
+
+# Check if policy is already created
+aws iam get-policy --policy-arn arn:aws:iam::561243041928:policy/AWSLoadBalancerControllerIAMPolicy
 
 ## Sample Output
 Kalyans-MacBook-Pro:08-01-Load-Balancer-Controller-Install kdaida$ aws iam create-policy \
@@ -212,7 +217,7 @@ Kalyans-MacBook-Pro:08-01-Load-Balancer-Controller-Install kdaida$
 ### Step-03-02: Verify using eksctl cli
 ```sh
 # Get IAM Service Account
-eksctl get iamserviceaccount --cluster eksdemo
+eksctl get iamserviceaccount --cluster eksdemo --region eu-north-1
 
 # Sample Output
 Kalyans-MacBook-Pro:08-01-Load-Balancer-Controller-Install kdaida$ eksctl  get iamserviceaccount --cluster eksdemo1
@@ -298,10 +303,10 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
   --set image.repository=<account>.dkr.ecr.<region-code>.amazonaws.com/amazon/aws-load-balancer-controller
 
 ## Replace Cluster Name, Region Code, VPC ID, Image Repo Account ID and Region Code  
-helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=eksdemo --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller --set region=eu-north-1 --set vpcId=vpc-0a722986c679ec7e0 --set image.repository=602401143452.dkr.ecr.eu-north-1.amazonaws.com/amazon/aws-load-balancer-controller
+helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=eksdemo1 --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller --set region=ap-south-1 --set vpcId=vpc-0258871be02a38a37 --set image.repository=602401143452.dkr.ecr.ap-south-1.amazonaws.com/amazon/aws-load-balancer-controller
 ```
 - **Sample output for AWS Load Balancer Controller Install steps**
-```t
+```sh
 ## Sample Ouput for AWS Load Balancer Controller Install steps
 Kalyans-MacBook-Pro:08-01-Load-Balancer-Controller-Install kdaida$ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
 >   -n kube-system \
@@ -420,7 +425,7 @@ CHECK-3: Verify ENVs whose path name is "token"
 ```
 
 ### Step-04-06: Verify TLS Certs for AWS Load Balancer Controller - Internals
-```t
+```sh
 # List aws-load-balancer-tls secret 
 kubectl -n kube-system get secret aws-load-balancer-tls -o yaml
 
