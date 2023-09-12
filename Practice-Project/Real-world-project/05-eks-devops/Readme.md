@@ -24,7 +24,7 @@
 ## Step-03: Pre-requisite check
 - We are going to deploy a application which will also have a `ALB Ingress Service` and also will register its DNS name in Route53 using `External DNS`
 - Which means we should have both related pods running in our cluster. 
-```
+```sh
 # Verify alb-ingress-controller pod running in namespace kube-system
 kubectl get pods -n kube-system
 
@@ -39,9 +39,9 @@ kubectl get pods
 - Scan On Push: Enable
 - Click on **Create Repository**
 - Make a note of Repository name
-```
+```t
 # Sample ECR Repository URI
-180789647333.dkr.ecr.us-east-1.amazonaws.com/eks-devops-nginx
+561243041928.dkr.ecr.eu-north-1.amazonaws.com/eks-devops-nginx
 ```
 
 ## Step-05: Create CodeCommit Repository
@@ -49,8 +49,8 @@ kubectl get pods
 - Create Code Commit Repository with name as **eks-devops-nginx**
 - Create git credentials from IAM Service and make a note of those credentials.
 - Clone the git repository from Code Commit to local repository, during the process provide your git credentials generated to login to git repo
-```
-git clone https://git-codecommit.us-east-1.amazonaws.com/v1/repos/eks-devops-nginx
+```sh
+git clone git clone https://git-codecommit.eu-north-1.amazonaws.com/v1/repos/eks-devops-nginx
 ```
 - Copy all files from course section **11-DevOps-with-AWS-Developer-Tools/Application-Manifests** to local repository
   - buildspec.yml
@@ -87,12 +87,12 @@ git status
 - In an AWS CodePipeline, we are going to use AWS CodeBuild to deploy changes to our Kubernetes manifests. 
 - This requires an AWS IAM role capable of interacting with the EKS cluster.
 - In this step, we are going to create an IAM role and add an inline policy `EKS:Describe` that we will use in the CodeBuild stage to interact with the EKS cluster via kubectl.
-```
+```sh
 # Export your Account ID
-export ACCOUNT_ID=180789647333
+export ACCOUNT_ID=561243041928
 
 # Set Trust Policy
-TRUST="{ \"Version\": \"2012-10-17\", \"Statement\": [ { \"Effect\": \"Allow\", \"Principal\": { \"AWS\": \"arn:aws:iam::${ACCOUNT_ID}:root\" }, \"Action\": \"sts:AssumeRole\" } ] }"
+TRUST="{ \"Version\": \"2012-10-17\", \"Statement\": [ { \"Effect\": \"Allow\", \"Principal\": { \"AWS\": \"arn:aws:iam::561243041928:root\" }, \"Action\": \"sts:AssumeRole\" } ] }"
 
 # Verify inside Trust policy, your account id got replacd
 echo $TRUST
@@ -110,16 +110,16 @@ aws iam put-role-policy --role-name EksCodeBuildKubectlRole --policy-name eks-de
 ```
 
 ### For Windows users who are using Powershell
-```t
-Here is a solutions to creating the Trust policy from AWS Tech Support
+```sh
+# Here is a solutions to creating the Trust policy from AWS Tech Support
 
-I understand that you are following an instruction to create an IAM role for CodeBuild but the commands do not work for PowerShell.
+# I understand that you are following an instruction to create an IAM role for CodeBuild but the commands do not work for PowerShell.
 
-In PowerShell, the format is different from the scripts in Mac OS. Cmdlets are used in PowerShell. I have used Cmdlets in PowerShell to create a role and attach an inline policy. Please check the following for the details:
+# In PowerShell, the format is different from the scripts in Mac OS. Cmdlets are used in PowerShell. I have used Cmdlets in PowerShell to create a role and attach an inline policy. Please check the following for the details:
 
-1. Create IAM Role for CodeBuild to Interact with EKS
+# 1. Create IAM Role for CodeBuild to Interact with EKS
 
-First create a new file NewRoleTrustPolicy.json with the following contents:
+# First create a new file NewRoleTrustPolicy.json with the following contents:
 
 {
 
@@ -147,12 +147,12 @@ First create a new file NewRoleTrustPolicy.json with the following contents:
 
 }
 
-Note: please replace your account ID in the above Principal parameter.
+# Note: please replace your account ID in the above Principal parameter.
 
 
 New-IAMRole -AssumeRolePolicyDocument (Get-Content -raw NewRoleTrustPolicy.json) -RoleName EksCodeBuildKubectlRole
 
-After the above command, you can check if the IAM role EksCodeBuildKubectlRole is created in your AWS account. Please check the New-IAMRole Cmdlet reference in [1].
+# After the above command, you can check if the IAM role EksCodeBuildKubectlRole is created in your AWS account. Please check the New-IAMRole Cmdlet reference in [1].
 
 
 2. Define Inline Policy with eks Describe permission in a file iam-eks-describe-policy
@@ -185,14 +185,12 @@ References
 https://docs.aws.amazon.com/powershell/latest/reference/items/New-IAMRole.html
 [2]: Write-IAMRolePolicy
 https://docs.aws.amazon.com/powershell/latest/reference/items/Write-IAMRolePolicy.html
-
-
 ```
 
 ## Step-07: Update EKS Cluster aws-auth ConfigMap with new role created in previous step
 - We are going to add the role to the `aws-auth ConfigMap` for the EKS cluster.
 - Once the `EKS aws-auth ConfigMap` includes this new role, kubectl in the CodeBuild stage of the pipeline will be able to interact with the EKS cluster via the IAM role.
-```
+```sh
 # Verify what is present in aws-auth configmap before change
 kubectl get configmap aws-auth -o yaml -n kube-system
 
@@ -255,9 +253,9 @@ Save the file.
 
 ### Environment Variables for CodeBuild
 ```
-REPOSITORY_URI = 180789647333.dkr.ecr.us-east-1.amazonaws.com/eks-devops-nginx
-EKS_KUBECTL_ROLE_ARN = arn:aws:iam::180789647333:role/EksCodeBuildKubectlRole
-EKS_CLUSTER_NAME = eksdemo1
+REPOSITORY_URI = 561243041928.dkr.ecr.eu-north-1.amazonaws.com/eks-devops-nginx
+EKS_KUBECTL_ROLE_ARN = arn:aws:iam::561243041928:role/EksCodeBuildKubectlRole
+EKS_CLUSTER_NAME = eksdemo
 ```
 
 ### Review buildspec.yml 
@@ -386,7 +384,7 @@ artifacts:
   - Role Name: codebuild-eks-devops-cb-for-pipe-service-role
   - Policy Name: AmazonEC2ContainerRegistryFullAccess
 - Make changes to index.html (Update as V2),  locally and push change to CodeCommit
-```
+```sh
 git status
 git commit -am "V2 Deployment"
 git push
@@ -407,9 +405,9 @@ git push
 - Actions: Under Write - Select `AssumeRole`
 - Resources: Specific
   - Add ARN
-  - Specify ARN for Role: arn:aws:iam::180789647333:role/EksCodeBuildKubectlRole
+  - Specify ARN for Role: arn:aws:iam::561243041928:role/EksCodeBuildKubectlRole
   - Click Add
-```
+```sh
 # For Role ARN, replace your account id here, refer step-07 environment variable EKS_KUBECTL_ROLE_ARN for more details
 arn:aws:iam::<your-account-id>:role/EksCodeBuildKubectlRole
 ```
@@ -427,7 +425,7 @@ arn:aws:iam::<your-account-id>:role/EksCodeBuildKubectlRole
 - Commit the changes to local git repository and push to codeCommit Repository
 - Monitor the codePipeline
 - Test by accessing the static html page
-```
+```sh
 git status
 git commit -am "V3 Deployment"
 git push
@@ -453,7 +451,7 @@ http://devops.kubeoncloud.com/app1/index.html
 - Commit the changes to local git repository and push to codeCommit Repository
 - Monitor the codePipeline
 - Test by accessing the static html page
-```
+```sh
 git status
 git commit -am "V3 Deployment"
 git push
@@ -466,7 +464,7 @@ http://devops2.kubeoncloud.com/app1/index.html
 
 ## Step-14: Clean-Up
 - Delete All kubernetes Objects in EKS Cluster
-```
+```sh
 kubectl delete -f kube-manifests/
 ```
 - Delete Pipeline

@@ -39,7 +39,7 @@ eksctl create cluster --name=<value> \
                       --version="1.21" \
                       --without-nodegroup 
 
-eksctl create cluster --name=eksdemo --region=eu-north-1 --zones=eu-north-1a,eu-north-1b --without-nodegroup
+eksctl create cluster --name=eksdemo --region=eu-north-1 --zones=eu-north-1a,eu-north-1b --version="1.27" --without-nodegroup
 
 # Get List of clusters (Section-01-02)
 eksctl get cluster   
@@ -303,7 +303,7 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
   --set image.repository=<account>.dkr.ecr.<region-code>.amazonaws.com/amazon/aws-load-balancer-controller
 
 ## Replace Cluster Name, Region Code, VPC ID, Image Repo Account ID and Region Code  
-helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=eksdemo1 --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller --set region=ap-south-1 --set vpcId=vpc-0258871be02a38a37 --set image.repository=602401143452.dkr.ecr.ap-south-1.amazonaws.com/amazon/aws-load-balancer-controller
+helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=eksdemo --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller --set region=eu-north-1 --set vpcId=vpc-0f4747449aec4a352 --set image.repository=602401143452.dkr.ecr.eu-north-1.amazonaws.com/amazon/aws-load-balancer-controller
 ```
 - **Sample output for AWS Load Balancer Controller Install steps**
 ```sh

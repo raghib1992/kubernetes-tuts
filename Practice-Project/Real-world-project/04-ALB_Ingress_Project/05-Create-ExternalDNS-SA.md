@@ -78,7 +78,7 @@ eksctl create iamserviceaccount \
     --override-existing-serviceaccounts
 
 # Replaced name, namespace, cluster, IAM Policy arn 
-eksctl create iamserviceaccount --name external-dns --namespace default --region ap-south-1 --cluster eksdemo1 --attach-policy-arn arn:aws:iam::561243041928:policy/AllowExternalDNSUpdates --approve --override-existing-serviceaccounts
+eksctl create iamserviceaccount --name external-dns --namespace default --region eu-north-1 --cluster eksdemo --attach-policy-arn arn:aws:iam::561243041928:policy/AllowExternalDNSUpdates --approve --override-existing-serviceaccounts
 ```
 ### Step-03-02: Verify the Service Account
 - Verify external-dns service account, primarily verify annotation related to IAM Role
@@ -103,14 +103,14 @@ Observation:
 - Now make a note of that Role ARN, this we need to update in External-DNS k8s manifest
 ```sh
 # Make a note of Role ARN
-arn:aws:iam::561243041928:role/eksctl-eksdemo1-addon-iamserviceaccount-defa-Role1-1DFSWHJR5VJGV
+arn:aws:iam::561243041928:role/eksctl-eksdemo-addon-iamserviceaccount-defau-Role1-5PSBZSOXCKTV
 ```
 
 ### Step-03-05: Verify IAM Service Accounts using eksctl
 - You can also make a note of External DNS Role ARN from here too. 
 ```sh
 # List IAM Service Accounts using eksctl
-eksctl get iamserviceaccount --cluster eksdemo1 --region eu-north-1
+eksctl get iamserviceaccount --cluster eksdemo --region eu-north-1
 
 # Sample Output
 Kalyans-Mac-mini:08-06-ALB-Ingress-ExternalDNS kalyanreddy$ eksctl get iamserviceaccount --cluster eksdemo1
