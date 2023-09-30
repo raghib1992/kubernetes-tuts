@@ -24,8 +24,8 @@ spec:
             - name: AWS_MAIL_SERVER_HOST
               value: "email-smtp.eu-north-1.amazonaws.com"
             - name: AWS_MAIL_SERVER_USERNAME
-              value: "AKIAYFLFRGCEOGWVE7UX"
+              value: "*************"
             - name: AWS_MAIL_SERVER_PASSWORD
-              value: "BO5hERwTpNnolQhJfpY9IDZMobrpPkE6gZQMPIJ8AYAK"
+              value: "***************************"
             - name: AWS_MAIL_SERVER_FROM_ADDRESS
               value: "raghib.npti@gmail.com"
