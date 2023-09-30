@@ -78,6 +78,11 @@ eksctl create nodegroup --cluster=eksdemo --region=eu-north-1 --name=eksdemo-ng-
 1. EKS Cluster
 2. EKS Node Groups in Private Subnets
 ```sh
+# Configure kubeconfig for kubectl
+eksctl get cluster # TO GET CLUSTER NAME
+aws eks --region <region-code> update-kubeconfig --name <cluster_name>
+aws eks --region eu-north-1 update-kubeconfig --name eksdemo
+
 # Verfy EKS Cluster
 eksctl get cluster --region eu-north-1
 
@@ -89,11 +94,6 @@ eksctl get iamserviceaccount --cluster=eksdemo --region eu-north-1
 
 #Observation:
 1. No k8s Service accounts as of now. 
-
-# Configure kubeconfig for kubectl
-eksctl get cluster # TO GET CLUSTER NAME
-aws eks --region <region-code> update-kubeconfig --name <cluster_name>
-aws eks --region eu-north-1 update-kubeconfig --name eksdemo
 
 # Verify EKS Nodes in EKS Cluster using kubectl
 kubectl get nodes
@@ -124,12 +124,11 @@ ls -lrta
 ## Download specific version
 curl -o iam_policy_v2.3.1.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.3.1/docs/install/iam_policy.json
 
+# Check if policy is already created
+aws iam get-policy --policy-arn arn:aws:iam::561243041928:policy/AWSLoadBalancerControllerIAMPolicy
 
 # Create IAM Policy using policy downloaded
 aws iam create-policy --policy-name AWSLoadBalancerControllerIAMPolicy --policy-document file://iam_policy_latest.json
-
-# Check if policy is already created
-aws iam get-policy --policy-arn arn:aws:iam::561243041928:policy/AWSLoadBalancerControllerIAMPolicy
 
 ## Sample Output
 Kalyans-MacBook-Pro:08-01-Load-Balancer-Controller-Install kdaida$ aws iam create-policy \
@@ -303,7 +302,7 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
   --set image.repository=<account>.dkr.ecr.<region-code>.amazonaws.com/amazon/aws-load-balancer-controller
 
 ## Replace Cluster Name, Region Code, VPC ID, Image Repo Account ID and Region Code  
-helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=eksdemo --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller --set region=eu-north-1 --set vpcId=vpc-0f4747449aec4a352 --set image.repository=602401143452.dkr.ecr.eu-north-1.amazonaws.com/amazon/aws-load-balancer-controller
+helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=eksdemo --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller --set region=eu-north-1 --set vpcId=vpc-0f8aa8fa8edec70ca --set image.repository=602401143452.dkr.ecr.eu-north-1.amazonaws.com/amazon/aws-load-balancer-controller
 ```
 - **Sample output for AWS Load Balancer Controller Install steps**
 ```sh

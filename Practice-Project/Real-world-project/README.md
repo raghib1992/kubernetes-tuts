@@ -168,6 +168,12 @@ kubectl get all -n kube-system
 kubectl create ns prod
 ```
 
+#### HPA
+```sh
+kubectl autoscale deployment demo-deployment --cpu-percent=50 --min=2 --max=10
+```
+
+
 #### Namespace script
 ```yml
 # nasmespace.yaml
