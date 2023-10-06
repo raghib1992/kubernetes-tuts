@@ -20,17 +20,17 @@ metadata:
     alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'   
     ## SSL Settings
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:561243041928:certificate/44f58c60-f24e-48df-b664-9c8f448b097e
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-north-1:561243041928:certificate/2ec482ef-c8ba-45c8-a326-30ea25ac438b
     #alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS-1-1-2017-01 #Optional (Picks default if not used)
     # SSL Redirect Setting
-    alb.ingress.kubernetes.io/ssl-redirect: '443' 
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
 spec:
-  ingressClassName: alb   # Ingress Class                  
-  # defaultBackend:
-  #   service:
-  #     name: app3-nginx-nodeport-service
-  #     port:
-  #       number: 80     
+  ingressClassName: my-aws-ingress-class   # Ingress Class                  
+  defaultBackend:
+    service:
+      name: app3-nginx-nodeport-service
+      port:
+        number: 80     
   rules:
     - http:
         paths:      
@@ -48,13 +48,13 @@ spec:
                 name: app2-nginx-nodeport-service
                 port: 
                   number: 80
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: app3-nginx-nodeport-service
-                port: 
-                  number: 80    
+          # - path: /
+          #   pathType: Prefix
+          #   backend:
+              # service:
+          #       name: app3-nginx-nodeport-service
+          #       port: 
+          #         number: 80    
 
 # Important Note-1: In path based routing order is very important, if we are going to use  "/*", try to use it at the end of all rules.                                        
                         

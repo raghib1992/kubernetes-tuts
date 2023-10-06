@@ -25,9 +25,9 @@ metadata:
     # SSL Redirect Setting
     alb.ingress.kubernetes.io/ssl-redirect: '443'
     # External DNS - For creating a Record Set in Route53
-    external-dns.alpha.kubernetes.io/hostname: ferrari.raghib.in
+    external-dns.alpha.kubernetes.io/hostname: car.raghib.in
 spec:
-  ingressClassName: alb   # Ingress Class                  
+  ingressClassName: my-aws-ingress-class   # Ingress Class                  
   defaultBackend:
     service:
       name: app3-nginx-nodeport-service
@@ -37,7 +37,7 @@ spec:
   - hosts:
     - "*.raghib.in"   
   rules:
-    # - host: zen.raghib.in
+    - host: fortuner.raghib.in
     - http:
         paths:
           - path: /app1
@@ -47,7 +47,7 @@ spec:
                 name: app1-nginx-nodeport-service
                 port: 
                   number: 80
-    # - host: i10.raghib.in
+    - host: innova.raghib.in
     - http:
         paths:                  
           - path: /app2

@@ -36,7 +36,7 @@ kubectl version
 eksctl create cluster --name=<value> \
                       --region=<value> \
                       --zones=us-east-1a,us-east-1b \
-                      --version="1.21" \
+                      --version="1.28" \
                       --without-nodegroup 
 
 eksctl create cluster --name=eksdemo --region=eu-north-1 --zones=eu-north-1a,eu-north-1b --version="1.27" --without-nodegroup

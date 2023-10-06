@@ -11,7 +11,7 @@ description: Learn AWS Load Balancer Controller - External DNS & Ingress
 - **File Name:** 04-ALB-Ingress-SSL-Redirect-ExternalDNS.yml
 ```yaml
     # External DNS - For creating a Record Set in Route53
-    external-dns.alpha.kubernetes.io/hostname: dnstest901.stacksimplify.com, dnstest902.stacksimplify.com
+    external-dns.alpha.kubernetes.io/hostname: test.raghib.in, prod.raghib.in
 ```
 - In your case it is going to be, replace `yourdomain` with your domain name
   - dnstest901.yourdoamin.com
@@ -46,22 +46,22 @@ kubectl logs -f $(kubectl get po | egrep -o 'external-dns[A-Za-z0-9-]+')
 ```
 ### Verify Route53
 - Go to Services -> Route53
-- You should see **Record Sets** added for `dnstest901.stacksimplify.com`, `dnstest902.stacksimplify.com`
+- You should see **Record Sets** added for `test.raghib.in`, `prod.raghib.in`
 
 ## Step-04: Access Application using newly registered DNS Name
 ### Perform nslookup tests before accessing Application
 - Test if our new DNS entries registered and resolving to an IP Address
 ```t
 # nslookup commands
-nslookup dnstest901.stacksimplify.com
-nslookup dnstest902.stacksimplify.com
+nslookup test.raghib.in
+nslookup prod.raghib.in
 ```
 ### Access Application using dnstest1 domain
 ```t
 # HTTP URLs (Should Redirect to HTTPS)
-http://dnstest901.stacksimplify.com/app1/index.html
-http://dnstest901.stacksimplify.com/app2/index.html
-http://dnstest901.stacksimplify.com/
+http://test.raghib.in/app1/index.html
+http://test.raghib.in/app2/index.html
+http://test.raghib.in/
 ```
 
 ### Access Application using dnstest2 domain
@@ -81,8 +81,8 @@ kubectl delete -f kube-manifests/
 ## Verify Route53 Record Set to ensure our DNS records got deleted
 - Go to Route53 -> Hosted Zones -> Records 
 - The below records should be deleted automatically
-  - dnstest901.stacksimplify.com
-  - dnstest902.stacksimplify.com
+  - test.raghib.in
+  - prod.raghib.in
 ```
 
 
