@@ -146,7 +146,7 @@ kubectl apply -f V1-Microservices/
 ```
 
 ## Step-10: Verify the Deployment using kubectl
-```
+```sh
 # List Pods
 kubectl get pods
 
@@ -164,19 +164,19 @@ kubectl get ingress
 ```
 
 ## Step-11: Verify Microservices health-status via browser
-```
+```sh
 # User Management Service Health-Status
-https://services.kubeoncloud.com/usermgmt/health-status
+https://prod.raghib.in/usermgmt/health-status
 
 # Notification Microservice Health-Status via User Management
-https://services.kubeoncloud.com/usermgmt/notification-health-status
-https://services.kubeoncloud.com/usermgmt/notification-service-info
+https://prod.raghib.in/usermgmt/notification-health-status
+https://prod.raghib.in/usermgmt/notification-service-info
 ```
 
 ## Step-12: Import postman project to Postman client on our desktop. 
 - Import postman project
-- Add environment url 
-    - https://services.kubeoncloud.com (**Replace with your ALB DNS registered url on your environment**)
+- Add environment url
+    - https://prod.raghib.in (**Replace with your ALB DNS registered url on your environment**)
 
 ## Step-13: Test both Microservices using Postman
 ### User Management Service
@@ -185,8 +185,6 @@ https://services.kubeoncloud.com/usermgmt/notification-service-info
 - **List User**   
     - Verify if newly created user got listed. 
     
-
-
 ## Step-14: Rollout New Deployment - Set Image Option
 ```
 # Rollout New Deployment using Set Image

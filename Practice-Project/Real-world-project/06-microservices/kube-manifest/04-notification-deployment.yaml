@@ -22,10 +22,10 @@ spec:
           imagePullPolicy: Always
           env:
             - name: AWS_MAIL_SERVER_HOST
-              value: "email-smtp.eu-north-1.amazonaws.com"
+              value: "smtp-service"
             - name: AWS_MAIL_SERVER_USERNAME
-              value: "*************"
+              value: "********************"
             - name: AWS_MAIL_SERVER_PASSWORD
-              value: "***************************"
+              value: "**************************"
             - name: AWS_MAIL_SERVER_FROM_ADDRESS
-              value: "raghib.npti@gmail.com"
+              value: "azimraghib@gmail.com"
