@@ -179,7 +179,7 @@ kubectl run --generator=run-pod/v1 apache-bench -i --tty --rm --image=httpd -- a
 - DashBoard Name: EKS-Performance
 - Widget Type: Bar
 - Log Group: /aws/containerinsights/eksdemo1/performance
-```
+```sql
 STATS avg(node_cpu_utilization) as avg_node_cpu_utilization by NodeName
 | SORT avg_node_cpu_utilization DESC 
 ```
