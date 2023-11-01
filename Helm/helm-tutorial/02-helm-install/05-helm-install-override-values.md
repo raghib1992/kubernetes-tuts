@@ -110,7 +110,7 @@ Observation:
 
 ## Step-05: helm get values command
 - **helm get values:** This command downloads a values file for a given release
-```t
+```sh
 # helm get values
 helm get values RELEASE_NAME
 helm get values myapp901
