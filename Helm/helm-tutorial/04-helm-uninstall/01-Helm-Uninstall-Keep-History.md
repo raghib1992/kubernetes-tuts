@@ -31,7 +31,7 @@ Observation:
 ```
 
 ## Step-03: Rollback Uninstalled Release
-```t
+```sh
 # List Release History
 helm history myapp101
 

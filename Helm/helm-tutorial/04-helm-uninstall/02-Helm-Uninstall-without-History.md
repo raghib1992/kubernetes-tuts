@@ -23,8 +23,8 @@ As the release is permanently removed, we dont get an error "Error: release: not
 helm history myapp101
 ```
 
-## Step-05: Rollback Uninstalled Release
-```t
+## Step-02: Rollback Uninstalled Release
+```sh
 # Rollback Helm Uninstalled Release
 helm rollback <RELEASE> [REVISION] [flags]
 helm rollback myapp101 1 
@@ -32,7 +32,7 @@ Observation:
 Should throw error "Error: release: not found"
 ```
 
-## Step-06: Best Practice for Helm Uninstall
+## Step-03: Best Practice for Helm Uninstall
 - It is recommended to always use `--keep-history Flag` for following reasons
 - Keeping Track of uninstalled releases
 - Quick Rollback if that Release is required
