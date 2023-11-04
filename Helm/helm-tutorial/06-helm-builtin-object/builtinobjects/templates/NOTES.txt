@@ -1,0 +1,18 @@
+{{/* Root or Dot or Period Object */}}
+Root Object: {{ . }}
+
+{{/* Release Object */}}
+Release Name: {{ .Release.Name }}
+Release Namespace: {{ .Release.Namespace }}
+Release IsUpgrade: {{ .Release.IsUpgrade }}
+Release IsInstall: {{ .Release.IsInstall }}
+Release Revision: {{ .Release.Revision }}
+Release Service: {{ .Release.Service }}
+
+
+{{/* Chart Objet */}}
+Chart Name: {{ .Chart.Name }}
+Chart Version: {{ .Chart.Version }}
+Chart AppVersion: {{ .Chart.AppVersion }}
+Chart Type: {{ .Chart.Type }}
+Chart Name and Version: {{ .Chart.Name }}-{{ .Chart.Version }}
