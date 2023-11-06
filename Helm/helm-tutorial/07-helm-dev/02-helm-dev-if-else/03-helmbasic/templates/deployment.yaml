@@ -5,14 +5,12 @@ metadata:
   labels:
     app: nginx
 spec:
-{{- if and .Values.myapp.retail.enableFeature (eq .Values.myapp.env "prod")  }}
-  replicas: 4
-{{- else if eq .Values.myapp.env "prod"}}
-  replicas: 2
-{{- else if eq .Values.myapp.env "qa"}}
+{{- if or (eq .Values.myapp.env "prod") (eq .Values.myapp.env "uat") }}
   replicas: 6
-{{- else }}
-  repilcas: 1
+{{- else if eq .Values.myapp.env "qa" }}  
+  replicas: 2
+{{- else }}  
+  replicas: 1  
 {{- end }}
   selector:
     matchLabels:
