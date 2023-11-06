@@ -148,7 +148,7 @@ service:
 
 ## Step-06: helm get manifest command 
 - **helm get manifest:** This command fetches the generated manifest for a given release.
-```t
+```sh
 # helm get manifest
 helm get manifest RELEASE-NAME
 helm get manifest myapp901
@@ -184,7 +184,7 @@ helm list
 
 ## Step-10: Deleting a default Key by passing null
 - If you need to delete a key from the default values, you may override the value of the key to be null, in which case Helm will remove the key from the overridden values merge.
-```t
+```sh
 # Release: myapp901
 helm install myapp901 stacksimplify/mychart1 --atomic
 helm list

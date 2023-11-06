@@ -43,7 +43,7 @@ helm list
 - The `--wait` flag will be set automatically if `--atomic` is used
 - `--wait` will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment, StatefulSet, or ReplicaSet are in a ready state before marking the release as successful. It will wait for as long as `--timeout`
 - `--timeout`  time to wait for any individual Kubernetes operation (like Jobs for hooks) (default 5m0s)
-```t
+```sh
 # Install Helm Chart 
 helm install qa101 stacksimplify/mychart1 --atomic
 
