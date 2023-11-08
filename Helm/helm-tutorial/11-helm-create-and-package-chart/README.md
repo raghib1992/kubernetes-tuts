@@ -129,7 +129,7 @@ Package file name: myfirstchart-2.0.0.tgz
 ## Step-09: Helm Install by path to a packaged chart and Verify
 ```t
 # Helm Install
-helm install myapp1v2 packages/myfirstchart-2.0.0.tgz --set service.nodePort=31232
+helm install myapp1v2 packages/myfirstchart-0.2.0.tgz --set service.nodePort=31232
 
 # Using kubectl commands
 kubectl get pods
@@ -151,13 +151,13 @@ http://localhost:31232
 - [Docker Image used](https://github.com/users/stacksimplify/packages/container/package/kubenginx)
 ```t
 # Helm Package  --app-version
-helm package myfirstchart/ --app-version "3.0.0" --version "3.0.0" --destination packages/
+helm package myfirstchart/ --app-version "3.0.0" --version "0.3.0" --destination packages/
 ```
 
 ## Step-11: Helm Install and Test if --version "3.0.0" worked
 ```t
 # Helm Install from package
-helm install myapp1v3 packages/myfirstchart-3.0.0.tgz --set service.nodePort=31233
+helm install myapp1v3 packages/myfirstchart-0.3.0.tgz --set service.nodePort=31233
 
 # Using kubectl commands
 kubectl get pods
@@ -179,6 +179,10 @@ Observation:
 
 ## Step-12: Uninstall Helm Releases
 ```t
+# Show the list of charts
+helm show chart myfirstchart/
+helm show chart .\packages\myfirstchart-0.3.0.tgz
+helm show all .\packages\myfirstchart-0.3.0.tgz
 # List Helm Releases
 helm list
 helm list --output=yaml
