@@ -32,7 +32,7 @@ spec:
 
 
 ## Step-03: Create k8s objects & Test
-```
+```sh
 # Create All Objects
 kubectl apply -f kube-manifests/
 
