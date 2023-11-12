@@ -1,5 +1,5 @@
-Configmap yaml file
-```
+### Configmap yaml file
+```yml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -8,18 +8,21 @@ data:
     name: "Raghib"
     surname: "Nadim"
 ```
-Create configmap
+### Create configmap
+```yml
+# Create config map
 kubectl apply -f demo-configmap.yamp
-
-kubectl get cm
-
-kubectl describe cm demo-configmap
-
-Create configmap
 kubectl create configmap demo-configmap --from-literal=db_username=admin --from-literal=db_password=admin123
 
-Use COnfigmap in value in pods
+# List of configmap created
+kubectl get cm
+
+# Get the details of the cm
+kubectl describe cm demo-configmap
 ```
+
+### Use Configmap in value in pods
+```yml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -53,7 +56,7 @@ spec:
                   key: channel.owner
 ```
 
-```
+```yml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -74,9 +77,11 @@ spec:
         - name: demo
           mountPath: /mydata
 ```
-
+```yml
 kubectl create cm mysql-demo-cm --from-file=files/my.cnf
+```
 
+```yml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -94,7 +99,7 @@ data:
     general_log_file        = /var/log/mysql/mysql.log
     log_error               = /var/log/mysql/error.log
 ```
-
+```yml
 apiVersion: v1
 kind: Pod
 metadata:
