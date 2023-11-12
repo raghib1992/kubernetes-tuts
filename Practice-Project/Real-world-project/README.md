@@ -5,7 +5,7 @@
     - VPC
     - RDS
     - ALB ingress
-## delete EKs Cluster
+## Delete EKS Cluster
 ```
 eksctl delete cluster <clustername>
 eksctl delete nodegroup --cluster=<cluster name> --name=<nodegroup name>
