@@ -1,0 +1,6 @@
+node_modules
+Dockerfile
+.git
+deployment.*
+service.*
+README.md

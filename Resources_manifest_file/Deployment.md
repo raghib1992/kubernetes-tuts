@@ -1,7 +1,7 @@
 # Deployment
 ## upgrading capabilities
 ## dep-def.yml
-```
+```yml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -25,8 +25,8 @@ spec:
         matchLabels:
           app: busybox
 ```
-## command to run deployment
-```
+### command to run deployment
+```sh
 kubectl create -f deploy-def.yml
 kubectl get deployments
 kubectl get all
@@ -34,14 +34,14 @@ kubectl create deployment --image=nginx nginx
 kubectl expose deployment <name> --port 80
 kubectl scale deployment <name> --replicas=5
 kubectl edit -f <definition file>
-kubectl replace -f <definition file> # edit the local def file and run this command
+# Edit the local def file and run this command
+kubectl replace -f <definition file> 
 kubectl delete -f <definition file>
 kubectl set image deployment <name> oldImage=newImage
-
 kubectl apply -f <definition-file>
 ```
 ### Generate Deployment YAML file (-o yaml). Don't create it(--dry-run) with 4 Replicas (--replicas=4)
-```
+```sh
 kubectl create deployment --image=nginx nginx --dry-run=client -o yaml
 ```
 ### In k8s version 1.19+, we can specify the --replicas option to create a deployment with 4 replicas.

@@ -1,4 +1,5 @@
-# command and arguments
+# ENV and ARG
+### CMD
 ```
 FROM ubuntu
 CMD sleep 10
@@ -7,17 +8,17 @@ CMD sleep 10
 FROM ubuntu
 CMD ["sleep", "10"]
 ```
-## command to make image and deploy container is
-```
+### command to make image and deploy container is
+```sh
 docker build -t ubuntu-sleeper
 docker run ubuntu-sleeper
 ```
-# Image
-```
+### ENTRYPOINT
+```t
 FROM ubuntu
 ENTRYPOINT ["sleep"]
 ```
-```
+```sh
 docker build -t ubuntu-sleeper:2
 docker run ubuntu-sleeper:2 10
 ```
