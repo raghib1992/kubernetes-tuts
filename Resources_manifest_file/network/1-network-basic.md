@@ -27,3 +27,16 @@ cat /proc/sys/net/ipv4/ip_forward
 0 (default)     No forward
 1               forward
 ```
+
+## Network namespace in linux host
+```sh
+# Create new namespace
+ip netns add red
+ip netns add blue
+# List the namespace
+ip netns
+
+# link
+ip netns exec red ip link
+ip -n red link 
+```
