@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-deployment
+  labels:
+    app: auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      name: auth-pod
+      labels: 
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: raghib1992/nodejs-auth

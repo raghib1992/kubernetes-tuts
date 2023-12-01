@@ -15,4 +15,8 @@ spec:
     spec:
       containers:
         - name: users
-          image: raghib1992/nodejs-sample-network
+          image: raghib1992/nodejs-users
+          env:
+            - name: AUTH_ADDRESS
+              value: auth-service
+
