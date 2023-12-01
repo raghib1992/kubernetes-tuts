@@ -23,3 +23,4 @@ body-JSON
 2. Create auth app
 3. Create tasks app
 4. Create reverse proxy
+5. Test using postman
