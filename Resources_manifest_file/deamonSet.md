@@ -31,3 +31,8 @@ specs:
 kubectl get daemonsets
 kubectl describe daemonsets monitoring-daemon
 ```
+
+## Use of daemonsets
+```
+In a Kubernetes architecture, DaemonSets are used for deploying background services across clusters, providing support services for every node—such as system operations services, collecting logs, monitoring frameworks like Prometheus, and storage volumes
+```

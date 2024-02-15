@@ -13,9 +13,9 @@ spec:
     metadata:
       {{- with .Values.podAnnotations }}
       annotations:
-        {{- toYaml . | nindent 8}}
-        appManagedBy: {{ $.Release.Service }}
-        chartName: {{ $.Chart.Name }}
+        {{- toYaml . | nindent 8 }}
+        appmanagedBy: {{ $.Release.Service | indent 1 }}
+        chartname: {{ $.Chart.Name | indent 1 }}
       {{- end }}
       labels:
         app: nginx

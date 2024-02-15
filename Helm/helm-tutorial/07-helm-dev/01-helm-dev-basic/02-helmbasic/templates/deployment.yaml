@@ -4,8 +4,24 @@ metadata:
   name: {{ .Release.Name }}-{{ .Chart.Name }}
   labels:
     app: nginx
+  annotations:    
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    # quote function
+    app.kubernetes.io/managed-by: {{ quote .Release.Service }}
+    # quote function
+    app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+    # default function
+    app.kubernetes.io/name: {{ default "RELEASENAME" .Values.releaseName }}
+    # Controlling Leading and Trailing White spaces 
+    leading-whitespace: "   {{- .Chart.Name }}    kalyan"
+    trailing-whitespace: "   {{ .Chart.Name -}}    kalyan"
+    leadtrail-whitespace: "   {{- .Chart.Name -}}    kalyan"
+    # indent function
+    indenttest: "  {{- .Chart.Name | indent 4 -}}  "
+    # nindent function
+    nindenttest: "  {{- .Chart.Name | nindent 4 -}}  "   
 spec:
-  replicas: 3
+  replicas: {{ default 4 .Values.replicaCount }}
   selector:
     matchLabels:
       app: nginx
@@ -19,3 +35,4 @@ spec:
         image: ghcr.io/stacksimplify/kubenginx:4.0.0
         ports:
         - containerPort: 80
+        {{- toYaml .Values.resources | nindent 10 }}

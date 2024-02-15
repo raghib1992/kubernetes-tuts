@@ -4,6 +4,6 @@ metadata:
   name: {{ .Release.Name }}-{{ .Chart.Name }}
 data:
 {{- with .Values.myapps.data.config }}
-  applicationName: {{ .appName }}
-  applicationType: {{ .appType }}
+  application-name: {{ .appName }}
+  application-type: {{ .appType }}
 {{- end }}

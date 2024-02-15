@@ -4,6 +4,8 @@
 - Objects are passed into a template from the template engine. 
 - Objects can be simple, and have just one value or they can contain other objects or functions. 
 - For example: the Release object contains several objects (like .Release.Name) and the Files object has a few functions.
+- Write Notes.txt file from scratch.
+  - get root object in root-object-content file
 ### Helm Builtin Objects
 - Release 
 - Chart 
@@ -142,6 +144,8 @@ Template Base Path: builtinobjects/templates
 ```
 
 ## Step-07: Helm Objects: Files
+- Create file myconfig1.toml in root directory
+- Create directory config-files containing 2 files myconfig
 - **Files Object:** 
 - Put the below in `NOTES.txt` and test it
 - [Additional Reference: Access Files Inside Templates](https://helm.sh/docs/chart_template_guide/accessing_files/)

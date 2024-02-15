@@ -1,5 +1,10 @@
 # If, else if, else
-myapp:
+# replicaCount: 4
+myprod:
   env: prod
   retail:
     enableFeature: true
+# myapp:
+#   env: prod
+#   retail:
+#     enableFeature: true
