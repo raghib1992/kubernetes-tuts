@@ -1,4 +1,4 @@
-{{- $chartname := .Chart.Name | quote | upper -}}
+{{- $chartName := .Chart.Name | quote | upper -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,7 +16,7 @@ spec:
       annotations:
         {{- toYaml . | nindent 8 }}
         appManagedBy: {{ $.Release.Service }}
-        appHelmChart: {{ $chartname }}        
+        appHelmChart: {{ $chartName }}     
       {{- end }}  
       labels:
         app: nginx    

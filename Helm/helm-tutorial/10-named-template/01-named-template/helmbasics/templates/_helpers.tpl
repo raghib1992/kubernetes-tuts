@@ -1,5 +1,5 @@
 {{/* Common Labels */}}
-{{- define "helmbasics.labels"}}
-    app: nginx
-    chartname: {{ .Chart.Name }}
-{{- end }}
+{{- define "helmbasics.labels" }}
+  app: nginx
+  chartname: {{ .Chart.Name }}
+{{- end}}

@@ -1,7 +1,7 @@
-{{- range $env := .Values.environments}}
+{{- range $environment := .Values.environments }}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: {{ $env.name }}
+  name: {{ $environment.name}}
 ---
-{{- end }}  
+{{- end }}

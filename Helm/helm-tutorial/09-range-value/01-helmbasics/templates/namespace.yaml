@@ -1,7 +1,8 @@
-{{- range .Values.namespaces}}
+# To create multiple namespace we use range
+{{- range .Values.namespaces }}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: {{ .name }}
+  name: {{ .name }}  # iterate for 3 times
 ---
-{{- end }}  
+{{- end }}
