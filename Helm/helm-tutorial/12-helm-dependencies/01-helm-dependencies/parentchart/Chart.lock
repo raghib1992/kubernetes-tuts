@@ -1,0 +1,12 @@
+dependencies:
+- name: mychart1
+  repository: https://stacksimplify.github.io/helm-charts/
+  version: 0.1.0
+- name: mychart2
+  repository: https://stacksimplify.github.io/helm-charts/
+  version: 0.4.0
+- name: mysql
+  repository: https://charts.bitnami.com/bitnami
+  version: 9.19.1
+digest: sha256:097de7222b531803d2cc980d26116cd00e565479f8855f44063b5e2ee3327603
+generated: "2024-02-19T01:01:56.9572732+05:30"
