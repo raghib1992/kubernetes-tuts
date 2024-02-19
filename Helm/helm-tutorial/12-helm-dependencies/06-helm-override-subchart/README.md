@@ -2,6 +2,10 @@
 
 ## Step-01: Introduction
 - Override subchart(child chart) values from parent chart
+- To check the .tgz provided chart values
+```
+helm show values parentchart/charts/mychart4-0.1.0.tgz
+```
 
 
 ## Step-02: Review Chart.yaml

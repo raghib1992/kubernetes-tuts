@@ -9,4 +9,4 @@ dependencies:
   repository: https://stacksimplify.github.io/helm-charts/
   version: 0.4.0
 digest: sha256:6c54b492ae349369eb5d3fa0ddbf86d3135f4055e0222d5ac1cc13fcf7946f9b
-generated: "2023-08-19T14:30:50.220754+05:30"
+generated: "2024-02-19T12:33:30.3768563+05:30"

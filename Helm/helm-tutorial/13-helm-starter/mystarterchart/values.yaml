@@ -1,4 +1,4 @@
-# Default values for parentchart.
+# Default values for <CHARTNAME>.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -14,14 +14,7 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
+
 
 podAnnotations: {}
 
@@ -39,23 +32,8 @@ securityContext: {}
 service:
   type: NodePort
   port: 80
-  nodePort: 31231
-  
-ingress:
-  enabled: false
-  className: ""
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: chart-example.local
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  nodePort: 31239
+
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -69,12 +47,6 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}
 
