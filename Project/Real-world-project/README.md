@@ -26,16 +26,35 @@ eksctl delete nodegroup --cluster=<cluster name> --name=<nodegroup name>
 ### **Step 01 Install AWS CLI**
 
 ### **Step 02 Install Kubectl**
+#### `*Important Note*`: You must use a kubectl version that is within one minor version difference of your Amazon EKS cluster control plane. For example, a 1.20 kubectl client works with Kubernetes 1.19, 1.20 and 1.21 clusters.
+
+```sh
+# Verify EKS Cluster version
+kubectl version --short
+kubectl version
+```
 
 ### **Step 03 Install EKSCTL**
+```sh
+# Verify eksctl version
+eksctl version
+```
+
 
 ### **Step 04 Create EKs cluster using eksctl**
 ```sh
 eksctl create cluster --name=eksdemo1 --region=ap-south-1 --zones=ap-south-1a,ap-south-1b --without-nodegroup
+
+eksctl create cluster --name=eksdemo --region=eu-north-1 --zones=eu-north-1a,eu-north-1b --version="1.27" --without-nodegroup
+
+# Get List of clusters (Section-01-02)
+eksctl get cluster
 ```
 ### **Step 05 Create and Associate IAM OIDC Provider for our EKS cluster**
 ```sh
 eksctl utils associate-iam-oidc-provider --region ap-south-1 --cluster eksdemo1 --approve
+
+eksctl utils associate-iam-oidc-provider --region eu-north-1 --cluster eksdemo --approve
 ```
 ### **Step 06 Create EC2 Key Pair**
 - name: **kube-demo**
@@ -52,7 +71,39 @@ eksctl create nodegroup --cluster=eksdemo1 --region=ap-south-1 --name=eksdemo1-n
 # Create Nodegroup in Private subnet
 
 eksctl create nodegroup --cluster=eksdemo1 --region=ap-south-1 --name=eksdemo1-ng-private1 --node-type=t3.medium --nodes-min=2 --nodes-max=4 --node-volume-size=20 --ssh-access --ssh-public-key=kube-demo --managed --asg-access --external-dns-access --full-ecr-access --appmesh-access --alb-ingress-access --node-private-networking   
+
+eksctl create nodegroup --cluster=eksdemo --region=eu-north-1 --name=eksdemo-ng-private1 --node-type=t3.medium --nodes-min=2 --nodes-max=4 --node-volume-size=20 --ssh-access --ssh-public-key=kube-demo --managed --asg-access --external-dns-access --full-ecr-access --appmesh-access --alb-ingress-access --node-private-networking 
 ```
+
+### Pre-requisite-3:  Verify Cluster, Node Groups and configure kubectl cli if not configured
+1. EKS Cluster
+2. EKS Node Groups in Private Subnets
+```sh
+# Configure kubeconfig for kubectl
+eksctl get cluster # TO GET CLUSTER NAME
+aws eks --region <region-code> update-kubeconfig --name <cluster_name>
+aws eks --region eu-north-1 update-kubeconfig --name eksdemo
+
+# Verfy EKS Cluster
+eksctl get cluster --region eu-north-1
+
+# Verify EKS Node Groups
+eksctl get nodegroup --cluster=eksdemo --region eu-north-1
+
+# Verify if any IAM Service Accounts present in EKS Cluster
+eksctl get iamserviceaccount --cluster=eksdemo --region eu-north-1
+
+#Observation:
+1. No k8s Service accounts as of now. 
+
+# Verify EKS Nodes in EKS Cluster using kubectl
+kubectl get nodes
+
+# Verify using AWS Management Console
+1. EKS EC2 Nodes (Verify Subnet in Networking Tab)
+2. EKS Cluster
+```
+
 ### **Subnet Route Table Verification - Outbound Traffic goes via NAT Gateway**
 1. Verify the node group subnet routes to ensure it created in private subnets
 2. Go to Services -> EKS -> eksdemo -> eksdemo1-ng1-private
