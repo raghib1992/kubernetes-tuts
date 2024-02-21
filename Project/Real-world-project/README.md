@@ -84,6 +84,9 @@ eksctl get cluster # TO GET CLUSTER NAME
 aws eks --region <region-code> update-kubeconfig --name <cluster_name>
 aws eks --region eu-north-1 update-kubeconfig --name eksdemo
 
+# Get access detail
+kubectl auth can-i get pod
+
 # Verfy EKS Cluster
 eksctl get cluster --region eu-north-1
 

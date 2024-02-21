@@ -494,7 +494,7 @@ spec:
 ## Step-07: Create IngressClass Resource
 ```sh
 # Create IngressClass Resource
-kubectl apply -f manifest-file/01-ingress-class.yaml
+kubectl apply -f 01-default-backend-manifest/01-ingress-class.yaml
 
 # Verify IngressClass Resource
 kubectl get ingressclass
