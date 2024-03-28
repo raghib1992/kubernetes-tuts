@@ -12,8 +12,8 @@ spec:
     path: helm-guestbook
     repoURL: "https://github.com/raghib1992/argocd-private-repo.git"
     targetRevision: master
-    # helm:
-    #  releaseName: my-release
+    helm:
+     releaseName: my-release
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
