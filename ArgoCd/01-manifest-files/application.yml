@@ -7,7 +7,7 @@ spec:
   destination: 
     namespace: uzma
     server: "https://kubernetes.default.svc"
-  project: default
+  project: dev-project
   source: 
     path: guestbook
     repoURL: "https://github.com/raghib1992/argocd-example-apps.git"

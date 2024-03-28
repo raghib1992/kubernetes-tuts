@@ -6,7 +6,7 @@ metadata:
 spec:
   description: Dev-project
   sourceRepos:
-  - 'https://github.com/raghib1992/argocd-private-repo.git'
+  - 'https://github.com/raghib1992/argocd-example-apps.git'
 
   destinations:
   - namespace: '*'

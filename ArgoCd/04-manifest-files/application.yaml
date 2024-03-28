@@ -7,7 +7,7 @@ spec:
   destination: 
     namespace: shaheen
     server: "https://kubernetes.default.svc"
-  project: dev-project
+  project: prod-project
   source: 
     path: helm-guestbook
     repoURL: "https://github.com/raghib1992/argocd-private-repo.git"

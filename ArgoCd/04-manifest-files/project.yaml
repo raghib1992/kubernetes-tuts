@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: dev-project
+  name: prod-project
   namespace: argocd
 spec:
-  description: Dev-project
+  description: Prod-project
   sourceRepos:
   - 'https://github.com/raghib1992/argocd-example-apps.git'
 
