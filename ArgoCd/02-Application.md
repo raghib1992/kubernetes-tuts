@@ -17,7 +17,7 @@
 ## Create Application in docker-kubernetes using CLI Approach 
 ```sh
 # Create application app-2
-argocd app create app-2 --repo https://github.com/mabusaa/argocd-example-apps.git --revision master --path guestbook --dest-server https://kubernetes.default.svc --dest-namespace app-2 --sync-option CreateNamespace=true
+argocd app create shaheenbook--repo https://github.com/mabusaa/argocd-example-apps.git --revision master --path guestbook --dest-server https://kubernetes.default.svc --dest-namespace shaheen --sync-option CreateNamespace=true
 
 # Sync application
 argocd app sync app-2

@@ -24,7 +24,7 @@ kubectl get secret -n argocd
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 
 # for linux to convert base64 to string
-echo NTVTY3EtRE9ObHZzamZZSg== | base64 --decode
+echo Zf5T6Hnml9hUql9T | base64 --decode
 
 # for window to convert base64 to string
 [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String("emFmNTZhRkVYeVRUNXFXeA=="))
