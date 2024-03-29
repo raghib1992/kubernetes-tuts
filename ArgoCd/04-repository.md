@@ -10,7 +10,7 @@
 - You can register repos using declarative approach, cli and web UI.
 ## Create the secret using kubectl
 ```
-kubectl apply -f /practice/repo.yaml
+kubectl apply -f 04-manifest-files/
 ```
 ## Verify secret is created
 ```
