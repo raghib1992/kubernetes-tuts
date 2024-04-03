@@ -9,7 +9,7 @@
     - Rollback cannot be performed against an application with automated sync enabled.
 
 
-### Auto Sync Declaratively
+### Enable Auto-Sync In Declaratively Approach
 ```yml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
