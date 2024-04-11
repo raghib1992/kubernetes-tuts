@@ -20,6 +20,7 @@ helm repo list
 # Add Helm Repository
 helm repo add <DESIRED-NAME> <HELM-REPO-URL>
 helm repo add mybitnami https://charts.bitnami.com/bitnami
+helm repo add stacksimplify https://stacksimplify.github.io/helm-charts/
 
 # List Helm Repositories
 helm repo list
