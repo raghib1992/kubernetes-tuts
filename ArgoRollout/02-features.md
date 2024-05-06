@@ -1,7 +1,7 @@
 # Research the Argo Rollouts Features.
 ### The benefits of using Argo Rollouts for application delivery are followings:
 - Advance deployment strategies like Canary Deployment, Blue-Green Deployment, Rolling Updates, Recreate, Fine Grained
-- we can add manual or automatic promote of deployment steps in rollouts:
+- We can add manual or automatic promote of deployment steps in rollouts:
 - Sample rollout for auto promotion of steps in strategy in every 10 sec
 ```yaml
 apiVersion: argoproj.io/v1alpha1
