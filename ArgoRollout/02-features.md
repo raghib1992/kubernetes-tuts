@@ -106,4 +106,3 @@ spec:
 # Compare Argo Rollouts with existing application delivery tools like ArgoCD & Kargo
 # Identify potential challenges or limitations of implementing Argo Rollouts.
 # Find out how we can add permission and Login access using SSO
-# Check dedicated UI available. and open dashboard through present ingress
