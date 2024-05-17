@@ -187,4 +187,52 @@ spec:
 - Eliminates the need for custom scripting in CI pipelines for environment promotion.
 
 # Find out how we can add permission and Login access using SSO
+- Kubernetes offers RBAC for granular control over user permissions.
+- Define custom roles in Kubernetes with specific permissions related to Argorollouts (e.g., view rollouts, trigger canary deployments).
+- Assign these roles to user groups using Kubernetes RBAC tools.
+- Sample RBAC manifest file
+```yml
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: admin-rollouts
+rules:
+- apiGroups: ["argoproj.io"]
+  resources: ["rollouts"]
+  verbs: ["*"]
+```
+
 # Check dedicated UI available. and open dashboard through present ingress
+### Install plugins
+
+- The kubectl plugin is optional, but is convenient for managing and visualizing rollouts from the UI and command line.
+
+- Brew
+```
+brew install argoproj/tap/kubectl-argo-rollouts
+```
+- Manually
+  - Install Argo Rollouts Kubectl plugin with curl.
+```sh
+curl -LO https://github.com/argoproj/argo-rollouts/releases/latest/download/kubectl-argo-rollouts-darwin-amd64
+https://github.com/argoproj/argo-rollouts/releases/latest/download/kubectl-argo-rollouts-linux-amd64
+# For Linux dist, replace darwin with linux
+```
+- Make the kubectl-argo-rollouts binary executable.
+```sh
+chmod +x ./kubectl-argo-rollouts-darwin-amd64
+# For Linux dist, replace darwin with linux
+```
+- Move the binary into your PATH
+```sh
+sudo mv ./kubectl-argo-rollouts-darwin-amd64 /usr/local/bin/kubectl-argo-rollouts
+# For Linux dist, replace darwin with linux
+```
+- Test to ensure the version you installed is up-to-date:
+```sh
+kubectl argo rollouts version
+```
+- Manually create Ingress and Service:
+  - Create a Service targeting the Argo Rollouts deployment with port 3100.
+  - Create an Ingress resource with a desired hostname and path (e.g., rollouts.example.com/dashboard).
+  - Configure the Ingress to point to the Service you created earlier.
