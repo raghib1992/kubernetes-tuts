@@ -61,3 +61,4 @@ subjects:
   name: default
   namespace: argo-rollouts
 ```
+
