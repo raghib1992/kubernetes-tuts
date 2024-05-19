@@ -6,6 +6,7 @@ metadata:
     app.kubernetes.io/name: argo-rollouts-dashboard
     app.kubernetes.io/part-of: argo-rollouts
   name: argo-rollouts-dashboard
+  # namespace: argo-rollouts
 spec:
   replicas: 1
   selector:
@@ -16,7 +17,7 @@ spec:
       labels:
         app.kubernetes.io/name: argo-rollouts-dashboard
     spec:
-      serviceAccountName: argo-rollouts-dashboard
+      serviceAccountName: default
       containers:
         - name: argo-rollouts-dashboard
           image: quay.io/argoproj/kubectl-argo-rollouts
