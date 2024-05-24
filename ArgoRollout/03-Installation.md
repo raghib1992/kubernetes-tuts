@@ -43,7 +43,7 @@ sudo mv ./kubectl-argo-rollouts-darwin-amd64 /usr/local/bin/kubectl-argo-rollout
 sudo mv ./kubectl-argo-rollouts-linux-amd64 /usr/local/bin/kubectl-argo-rollouts
 ```
 - Test to ensure the version you installed is up-to-date:
-```
+```sh
 kubectl argo rollouts version
 ```
  
