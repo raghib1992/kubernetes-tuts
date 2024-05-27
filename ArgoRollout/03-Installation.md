@@ -9,7 +9,7 @@
 # Install argo rollout
 ### Step1: Install kubectl
 ### Step2: Create namespace argo-rollouts
-```
+```sh
 kubectl create ns argo-rollouts
 ```
 ### Step3: Install argo rollout
@@ -19,13 +19,14 @@ kubectl apply -n argo-rollouts -f https://github.com/argoproj/argo-rollouts/rele
 ### Step 4: Install plugins
 - The kubectl plugin is optional, but is convenient for managing and visualizing rollouts from the command line.
 - Brew
-```
+```sh
 brew install argoproj/tap/kubectl-argo-rollouts
 ```
 - **Manual**
 - Install Argo Rollouts Kubectl plugin with curl.
 ```sh
 curl -LO https://github.com/argoproj/argo-rollouts/releases/latest/download/kubectl-argo-rollouts-darwin-amd64
+
 curl -LO https://github.com/argoproj/argo-rollouts/releases/latest/download/kubectl-argo-rollouts-linux-amd64
 # For Linux dist, replace darwin with linux
 ```
@@ -47,3 +48,15 @@ sudo mv ./kubectl-argo-rollouts-linux-amd64 /usr/local/bin/kubectl-argo-rollouts
 kubectl argo rollouts version
 ```
  
+# Install Using helm
+### To install the chart with the release name my-release:
+```
+helm repo add argo https://argoproj.github.io/argo-helm
+```
+
+### 
+```
+helm install my-release argo/argo-rollouts --set dashboard.enabled=true
+
+kubectl port-forward service/my-release-argo-rollouts-dashboard 31000:3100
+```
