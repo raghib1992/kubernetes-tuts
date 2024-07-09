@@ -2,6 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: example-rollout
+  name: brown-dev-001
 spec:
   replicas: 3
   selector:
