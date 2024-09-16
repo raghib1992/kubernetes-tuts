@@ -63,6 +63,10 @@ argocd app list
 
 
 # Identifying tool
+- helm
+- Kustomize application
+- Directory of YAML file
+- Jsonnet
 ### application.yaml file
 ```yml
 apiVersion: argoproj.io/v1alpha1
@@ -79,6 +83,7 @@ spec:
     path: guestbook
     repoURL: "https://github.com/mabusaa/argocd-example-apps.git"
     targetRevision: master
+    # mention any as per your tools
     # directory of yaml
     directory:
      recurse: true
@@ -92,6 +97,13 @@ spec:
     syncOptions:
       - CreateNamespace=true
 ```
+#### If you don’t explicitly specify a tool, then its detected as follows:
+  - Helm charts : if there is a file as Chart.yaml
+  - Kustomize: if there's a kustomization.yaml, kustomization.yml, or Kustomization
+  - Otherwise it is assumed to be a plain Yaml directory application
+#### Tool - Explicitly Specifying In Web UI
+
+![alt text](image-18.png)
 
 ## Helm Option
 - Helm Applications an be deployed from two sources
@@ -477,3 +489,7 @@ helm:
         ref: values
         targetRevision: master
 ```
+
+# Ref
+- *https://github.com/mabusaa/argocd-example-apps.git*
+- *https://github.com/mabusaa/argocd-course-apps-definitions.git*
