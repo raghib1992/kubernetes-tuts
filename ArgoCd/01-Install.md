@@ -95,3 +95,7 @@ b. namespace level privileges: https://github.com/argoproj/argo-cd/raw/stable/ma
 https://github.com/argoproj/argo-cd/raw/stable/manifests/core-install.yaml
 
 4. Helm chart: https://github.com/argoproj/argo-helm/tree/main/charts/argo-cd
+
+
+### Medium Link to create rollout and cd
+- *https://victoryeo-62924.medium.com/getting-started-with-argo-cd-and-argo-rollout-757fc37ea8e8#:~:text=Argo%20CD%20monitors%20the%20changes,canary%2C%20blue%2Fgreen).*
