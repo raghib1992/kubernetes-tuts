@@ -1,0 +1,9 @@
+auth:
+  username: rabbit
+  password: Password123
+configuration: |-
+  ## Username and password
+  default_user = {{ .Values.auth.username }}
+  {{- if and (not .Values.auth.securePassword) .Values.auth.password }}
+  default_pass = {{ .Values.auth.password }}
+  {{- end }}
