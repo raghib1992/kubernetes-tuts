@@ -109,3 +109,23 @@ spec:
 Ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#claims-as-volumes
 
 ************************************
+# PV
+
+#### LInk *https://docs.netapp.com/us-en/trident/trident-use/create-stor-class.html*
+```yml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"allowVolumeExpansion":true,"apiVersion":"storage.k8s.io/v1","kind":"StorageClass","metadata":{"annotations":{},"name":"fsx-ontap-silver"},"parameters":{"selector":"tier=silver"},"provisioner":"netapp.io/trident"}
+  creationTimestamp: "2023-06-01T20:56:10Z"
+  name: fsx-ontap-silver
+  resourceVersion: "1336746324"
+  uid: d4dbfd15-be93-477c-93e3-5bff0e8f7b95
+parameters:
+  selector: tier=silver
+provisioner: csi.trident.netapp.io
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+```
