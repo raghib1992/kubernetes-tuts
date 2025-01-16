@@ -1,2 +1,1 @@
-kubectl create secret generic rabbitmq-secret --from-literal=rabbitmq-password='password123' -o yaml --dry-run
-
+https://docs.bitnami.com/general/how-to/troubleshoot-helm-chart-issues/#credential-errors-while-upgrading-chart-releases
