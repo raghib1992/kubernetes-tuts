@@ -5,9 +5,9 @@ metadata:
   namespace: argocd
 spec: 
   destination: 
-    namespace: uzma
+    namespace: dev
     server: "https://kubernetes.default.svc"
-  project: dev-project
+  project: default
   source: 
     path: guestbook
     repoURL: "https://github.com/raghib1992/argocd-example-apps.git"
