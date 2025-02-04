@@ -1,23 +1,155 @@
 # Steps
-## 1. Create Node
-Create node for worker node and master as per your requirement
-## 2. Istall Dockere in all the nodes
-## 3. Install kubeadm tool in all the node
-## 4. Initialize the master server
-#### All the required components are installed during this process
-## 5. Creat POD network between master and worker node
-## 6. Join the master node with worker node
+#### 1. Create Node
+- Create node for worker node and master as per your requirement (ubuntu)
+#### 2. Istall Dockere in all the nodes
+#### 3. Install kubeadm tool in all the node
+#### 4. Initialize the master server
+- All the required components are installed during this process
+#### 5. Creat POD network between master and worker node
+#### 6. Join the master node with worker node
+
+#### Ref
+- *https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/*
 *****************************************
 
-
-# Letting iptables see bridge traffic
-## load br_netfilter module in all the nodes
+## 1. Verify the MAC address and product_uuid are unique for every node
+#### Letting iptables see bridge traffic
+```sh
+ip a
+#The product_uuid can be checked by using the command 
+sudo cat /sys/class/dmi/id/product_uuid
 ```
+#### Check required ports
+```sh
+nc 127.0.0.1 6443 -v
+```
+
+## 2. Install Kubeadm kubelet and kubectl on all nodes
+1. Update the apt package index and install packages needed to use the Kubernetes apt repository:
+```sh
+sudo apt-get update
+# apt-transport-https may be a dummy package; if so, you can skip that package
+sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+```
+2. Download the public signing key for the Kubernetes package repositories. The same signing key is used for all repositories so you can disregard the version in the URL:
+```sh
+# If the directory `/etc/apt/keyrings` does not exist, it should be created before the curl command, read the note below.
+sudo mkdir -p -m 755 /etc/apt/keyrings
+
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+```
+##### **Note**: In releases older than Debian 12 and Ubuntu 22.04, directory /etc/apt/keyrings does not exist by default, and it should be created before the curl command.
+
+3. Add the appropriate Kubernetes apt repository. Please note that this repository have packages only for Kubernetes 1.32; for other Kubernetes minor versions, you need to change the Kubernetes minor version in the URL to match your desired minor version (you should also check that you are reading the documentation for the version of Kubernetes that you plan to install).
+```sh
+# This overwrites any existing configuration in /etc/apt/sources.list.d/kubernetes.list
+
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+```
+
+4. Update the apt package index, install kubelet, kubeadm and kubectl, and pin their version:
+```sh
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl
+
+# Verify kubeadm version
+kubeadm version
+```
+
+5. (Optional) Enable the kubelet service before running kubeadm:
+```sh
+sudo systemctl enable --now kubelet
+```
+
+## 3. Install Container Runtime in all the nodes
+#### Install containerd
+```sh
+sudo apt update
+sudo apt install -y containerd
+```
+#### Install Docker
+
+## 4. Configuring a cgroup driver
+### Check the current configure cgroup
+```sh
+ps -p 1
+```
+#### Use the current using cgroup either systemd or cgroufs
+#### Note: In v1.22 and later, if the user does not set the cgroupDriver field under KubeletConfiguration, kubeadm defaults it to systemd. In Kubernetes v1.28, you can enable automatic detection of the cgroup driver as an alpha feature. See systemd cgroup driver for more details.
+#### Hence we not implement this step
+
+#### 1. kubeadm-config.yaml
+```yml
+kind: ClusterConfiguration
+apiVersion: kubeadm.k8s.io/v1beta4
+kubernetesVersion: v1.21.0
+---
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+cgroupDriver: systemd
+```
+#### 2. Such a configuration file can then be passed to the kubeadm command:
+```sh
+kubeadm init --config kubeadm-config.yaml
+```
+
+### Configuring the systemd cgroup driver
+#### 1. Create folder 
+```
+sudo mkdir -p /etc/containerd/
+```
+#### 2. check default config 
+```sh
+containerd config default
+```
+#### 3. To use the systemd cgroup driver in /etc/containerd/config.toml with runc, set
+```
+[plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+  ...
+  [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+    SystemdCgroup = true
+```
+
+```sh
+containerd confi g default | sed 's/SystemdCgroup = false/SystemdCgroup = true/' | sudo tee /etc/containerd/config.toml
+```
+
+#### 4. restart systemd
+```sh
+sudo systemctl restart containerd
+```
+#### 5. verify
+```sh
+cat /etc/containerd/config.toml | grep -i SystemdCgroup -B 50
+```
+
+## 5. Initialize control-plane
+```sh
+sudo kubeadm init --pod-network-cidr 10.244.0.0/16 --apiserver-advertise-address <ip add of master node>
+
+sudo kubeadm init --pod-network-cidr "10.244.0.0/16" --apiserver-advertise-address 172.31.24.74 --cri-socket unix:///var/run/containerd/containerd.sock --upload-creds
+```
+## 6. get config file
+```
+cat /etc/kubernetes/admin.conf
+```
+
+## 7. locally add file
+```
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+
+*******************************
+#### load br_netfilter module in all the nodes
+```sh
 lsmod | grep br_netfilter
 sudo modprobe br_netfilter
 ```
-## create new kernel paramter in all the nodes
-```
+#### create new kernel paramter in all the nodes
+```sh
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 br_netfilter
 EOF
@@ -31,19 +163,11 @@ sudo sysctl --system
 ```
 
 
-# Install Container Runtime in all the nodes
-## Ref - https://docs.docker.com/engine/install/
-```
-sudo yum install -y docker
-sudo systemctl start docker
-sudo systemctl enable docker
-sudo systemctl status docker
-```
 
-# Install Kubeadm kubelet and kubectl on all nodes
-## Ref - https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+ all nodes
+#### Ref - *https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/*
 
-```
+```t
 cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=test-cluster
@@ -54,23 +178,12 @@ gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cl
 exclude=kubelet kubeadm kubectl
 EOF
 ```
-## Set SELinux in permissive mode (effectively disabling it) on all node
-```
+#### Set SELinux in permissive mode (effectively disabling it) on all node
+```sh
 sudo setenforce 0
 sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
+```
 
-sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
-
-sudo systemctl enable --now kubelet
-```
-# Configure kubeadm only on master
-## Ref https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
-## Creating a cluster using kubeadm
-## Initializing your control-plane node
-##### edit apiserver-advertise-address
-```
-sudo kubeadm init --pod-network-cidr 10.244.0.0/16 --apiserver-advertise-address=172.31.38.189
-```
 # Post installation task only on master
 
 ## To start using your cluster, you need to run the following as a regular user:
