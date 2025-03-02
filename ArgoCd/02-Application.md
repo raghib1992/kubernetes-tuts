@@ -84,40 +84,7 @@ Click -> sync -> SHYNCHRONIZE
 argocd app list
 ```
 
-
-## Create Application in docker-kubernetes using declarative approach
-### Create Application manifest file
-### application.yaml
-```yml
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata: 
-  name: guestbook
-  namespace: argocd
-spec: 
-  destination: 
-    namespace: guestbook
-    server: "https://kubernetes.default.svc"
-  project: default
-  source: 
-    path: guestbook
-    repoURL: "https://github.com/mabusaa/argocd-example-apps.git"
-    targetRevision: master
-  syncPolicy:
-    syncOptions:
-      - CreateNamespace=true
-```
-
-### Create application
-```sh
-kubectl apply -f ./01-manifest-files/
-```
-### verify application
-```sh
-kubectl get application -n argocd
-
-argocd app list
-```
+# Create application using UI
 
 
 # Identifying tool
