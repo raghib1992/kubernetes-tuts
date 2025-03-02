@@ -328,11 +328,82 @@ argocd app sync diretory-app
 ```
 ***
 # Kustomize Option
-
-
-
-
-
+### ArgoCD provides the below for options
+• Name prefix: appended to resources.
+• Name suffix: appended to resources.
+• Images : to override images.
+• Common labels: set labels on all resources.
+• Common annotations: set annotations on all resources.
+• Version: explicitly set kustomize version.
+### Kustomize Name Prefix
+```yml
+source:
+    path: kustomize-guestbook
+    repoURL: "https://github.com/argoproj/argocd-example-apps.git"
+    targetRevision: HEAD
+    kustomize:
+        namePrefix: staging- # adds a prefix to all resources names
+```
+### Kustomize – Name Suffix
+```yml
+source:
+    path: kustomize-guestbook
+    repoURL: "https://github.com/argoproj/argocd-example-apps.git"
+    targetRevision: HEAD
+    kustomize:
+        nameSuffix: staging- # adds a prefix to all resources names
+```
+### Kustomize – Override Images
+```yml
+source:
+    path: kustomize-guestbook
+    repoURL: "https://github.com/argoproj/argocd-example-apps.git"
+    targetRevision: HEAD
+    kustomize:
+        images:
+            - gcr.io/heptio-images/ks-guestbook-demo:0.2
+```
+### Kustomize – Common Labels
+```yml
+source:
+    path: kustomize-guestbook
+    repoURL: "https://github.com/argoproj/argocd-example-apps.git"
+    targetRevision: HEAD
+    kustomize:
+        commonLabels:
+            app: demo
+            appVersion: 1.0
+```
+### Kustomize – Common Annotations
+```yml
+source:
+    path: kustomize-guestbook
+    repoURL: "https://github.com/argoproj/argocd-example-apps.git"
+    targetRevision: HEAD
+    kustomize:
+        commonAnnotations:
+            app: demo
+            appVersion: 1.0
+```
+### Kustomize – version
+```yml
+source:
+    path: kustomize-guestbook
+    repoURL: "https://github.com/argoproj/argocd-example-apps.git"
+    targetRevision: HEAD
+    kustomize:
+        version: v3.5.4
+```
+## Create Sample kustomize application
+1. Create application
+```
+kubectl apply -f 02-manifest-files/04-application.yaml
+```
+2. SYnc APP
+```
+argocd app sync kust-app
+```
+***
 ## Multiple sources for application
 - Combine related resources that exists indifferent  repos into one application
 ```yml
@@ -344,7 +415,7 @@ argocd app sync diretory-app
         repoURL: "https://prometheus-community.github.io/helm-charts"
         targetRevision: 5.3.2
 ```
-- remote helm chart with git-hosted values file
+- remote helm chart from remote heml repo and values.yaml file from git repo
 ```yml
     sources:
       - chart: ingress-nginx
