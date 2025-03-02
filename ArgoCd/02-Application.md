@@ -86,13 +86,34 @@ argocd app list
 
 # Create application using UI
 
+# Create Appliation using argocd cli
+1. login using argocd cli
+```
+argocd login <host>
+argocd login localhost:8080
+username
+password
+```
+2. list present app
+```
+argocd app list
+```
+3. Create application
+```
+argocd app create bushrabook --repo https://github.com/raghib1992/argocd-example-apps.git --revision master --path guestbook --dest-server https://kubernetes.default.svc --dest-namespace staging --sync-option CreateNamespace=true
+```
+4. Using Argocd cli
+```
+argocd app sync bushrabook
+```
+
 
 # Identifying tool
 - helm
 - Kustomize application
 - Directory of YAML file
 - Jsonnet
-### application.yaml file
+### How to mention tool in application.yaml file
 ```yml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -130,46 +151,47 @@ spec:
 
 ![alt text](image-18.png)
 
-## Helm Option
+1. Helm Option
 - Helm Applications an be deployed from two sources
     - Git Repo
     - Helm Repo
 
-### Helm from git repo
-```yml
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-    name: guestbook
-    namespace: argocd
-spec:
-    destination:
-        namespace: guestbook
-        server: "https://kubernetes.default.svc"
-    project: default
-    source:
-        path: helm guestbook
-        repoURL: "https://github.com/argoproj/argocd-example-apps.git"
-        targetRevision: HEAD
-```
+    i. Helm from git repo
+    ### Mention gitrepo for Helm source
+    ```yml
+    apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+        name: guestbook
+        namespace: argocd
+    spec:
+        destination:
+            namespace: guestbook
+            server: "https://kubernetes.default.svc"
+        project: default
+        source:
+            path: helm-guestbook
+            repoURL: "https://github.com/argoproj/argocd-example-apps.git"
+            targetRevision: HEAD
+    ```
 
-### Helm from Helm repo
-```yml
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-    name: guestbook
-    namespace: argocd
-spec:
-    destination:
-        namespace: guestbook
-        server: "https://kubernetes.default.svc"
-    project: default
-    source:
-        chart: sealed-secret
-        repoURL: "https://bitnami-labs.github.io/sealed-secrets"
-        targetRevision: 1.16.1 # For Helm, this refers to the chart
-```
+    ii. Helm from Helm repo
+    ```yml
+    apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+        name: guestbook
+        namespace: argocd
+    spec:
+        destination:
+            namespace: guestbook
+            server: "https://kubernetes.default.svc"
+        project: default
+        source:
+            chart: sealed-secret
+            repoURL: "https://bitnami-labs.github.io/sealed-secrets"
+            targetRevision: 1.16.1 # For Helm, this refers to the chart
+    ```
 ### ArgoCD provies the below for options
 - Release name.
 ```yml
