@@ -21,7 +21,7 @@ argocd app create shaheenbook --repo https://github.com/mabusaa/argocd-example-a
 ```
 
 
-# **Let Create first Application
+# **Let Create First Application
 1. Create repo in github where we create manifest for k8s resources which will be deployed by argocd
 ```t
 https://github.com/raghib1992/argocd-example-apps/guestbook
@@ -52,7 +52,7 @@ spec:
 kubectl apply -f 02-manifest-files/application.yml
 ```
 4. CHeck for application resource created in ArgoCD
-```
+```sh
 kubectl -n argocd get application
 
 # Output
@@ -68,7 +68,7 @@ password
 argocd app list
 ```
 5. Synchronize Application with github repo to argocd create k8s resource
-# By default ArgoCD doesn't Sync application
+### *By default ArgoCD doesn't Sync application*
 ```sh
 # Method 1
 # Using Argocd cli
