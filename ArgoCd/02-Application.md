@@ -266,7 +266,8 @@ kubectl apply -f ./02-manifest-files/02-application.yaml
 2. Sync the application
 3. Now chnge the release name, by default release name is app name
 ![alt text](image-19.png)
-4. Modify Application Manifest file, and add
+4. Modify Application Manifest file,
+##### add below code in spec.source
 ```
 helm:
   releaseName: first-release
@@ -274,83 +275,63 @@ helm:
 5. SYNCHRONIZE application with selecting PRUNE, which means delete and recreate with new release name
 ![alt text](image-20.png)
 
-
-- By default release name is application name
-- change release name
-##### add below code in spec.source
-```yml
-helm:
-    releaseName: my-release
-```# ArgoCD Application
-
-## Application is a Kubernetes resource object representing a deployed application instance in an environment.
-- It is defined by two key pieces of information:
-    - Source: reference to the desired state in Git (repository, revision, path)
-    - Destination: reference to the target cluster and namespace.
-
-- Applications can be created using below options
-    - Declaratively "Yaml". (Recommended)
-    - CLI
-    - Web UI
-        - click on `newapp`
-        - Fill the form
-        - Create app
-        - sync app
-
-## Create Application in docker-kubernetes using CLI Approach 
-```sh
-# Create application app-2
-argocd app create app-2 --repo https://github.com/mabusaa/argocd-example-apps.git --revision master --path guestbook --dest-server https://kubernetes.default.svc --dest-namespace app-2 --sync-option CreateNamespace=true
-
-# Sync application
-argocd app sync app-2
-
-# verify app
-argocd app list
-```
-
-
-## Directory Options
+***
+# Directory Options
 ### ArgoCD provides the below as options
 - Recursive: include all files in sub directories.
+    #### Directory Recursive
+    ```yml
+        source:
+            path: helm guestbook
+            repoURL: "https://github.com/argoproj/argocd-example-apps.git"
+            targetRevision: HEAD
+            directory:
+              recurse: true # include all sub driectories
+    ```
 - Jsonnet 
     - External Vars : list of external variables for Jsonnet
     - Top level Arguments.
-### Directory Recursive
-```yml
-    source:
-        path: helm guestbook
-        repoURL: "https://github.com/argoproj/argocd-example-apps.git"
-        targetRevision: HEAD
-        directory:
-          recurse: true # include all sub driectories
-```
-### Directory Jsonnet External Variables
-```yml
-    source:
-        path: helm guestbook
-        repoURL: "https://github.com/argoproj/argocd-example-apps.git"
-        targetRevision: HEAD
-        directory:
-          jsonnet:
-            extVars:
-            - name: service
-              value: “internal”
-```
+    ### Directory Jsonnet External Variables
+    ```yml
+        source:
+            path: helm guestbook
+            repoURL: "https://github.com/argoproj/argocd-example-apps.git"
+            targetRevision: HEAD
+            directory:
+              jsonnet:
+                extVars:
+                - name: service
+                  value: “internal”
+    ```
 
-### Directory Jsonnet External Variables
-```yml
-    source:
-        path: helm guestbook
-        repoURL: "https://github.com/argoproj/argocd-example-apps.git"
-        targetRevision: HEAD
-        directory:
-          jsonnet:
-            tlas:
-            - name: service
-              value: “internal”
-              code: false
+    ### Directory Jsonnet External Variables
+    ```yml
+        source:
+            path: helm guestbook
+            repoURL: "https://github.com/argoproj/argocd-example-apps.git"
+            targetRevision: HEAD
+            directory:
+              jsonnet:
+                tlas:
+                - name: service
+                  value: “internal”
+                  code: false
+    ```
+## Create Application with recursive Directories
+1. Create application
 ```
+kubectl apply -f 02-manifest-files/03-application.yaml
+```
+2. SYnc APP
+```
+argocd app sync diretory-app
+```
+***
+# Kustomize Option
+
+
+
+
 
 ## Multiple sources for application
 - Combine related resources that exists indifferent  repos into one application
