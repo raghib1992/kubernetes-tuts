@@ -49,7 +49,7 @@ spec:
 ```
 3. Apply manifest file
 ```
-kubectl apply -f 02-manifest-files/application.yml
+kubectl apply -f 02-manifest-files/01-application.yml
 ```
 4. CHeck for application resource created in ArgoCD
 ```sh
@@ -157,7 +157,7 @@ spec:
     - Helm Repo
 
     i. Helm from git repo
-    ### Mention gitrepo for Helm source
+    ### Mention git repo for Helm source
     ```yml
     apiVersion: argoproj.io/v1alpha1
     kind: Application
@@ -176,6 +176,7 @@ spec:
     ```
 
     ii. Helm from Helm repo
+    ### Mention helm chart for Helm source
     ```yml
     apiVersion: argoproj.io/v1alpha1
     kind: Application
@@ -192,70 +193,88 @@ spec:
             repoURL: "https://bitnami-labs.github.io/sealed-secrets"
             targetRevision: 1.16.1 # For Helm, this refers to the chart
     ```
-### ArgoCD provies the below for options
-- Release name.
-```yml
-    source:
-        path: helm guestbook
-        repoURL: "https://github.com/argoproj/argocd-example-apps.git"
-        targetRevision: HEAD
-        helm:
-            releaseName: # override release name (defaults to application name)
-```
-- Values files
-```yml
-    source:
-        path: helm guestbook
-        repoURL: "https://github.com/argoproj/argocd-example-apps.git"
-        targetRevision: HEAD
-        helm:
-          valuesFiles: # can set multi values files, (defaults to values.yaml in source repo)
-            - values-prod.yaml
-```
-- Parameters
-```yml
-    source:
-        path: helm guestbook
-        repoURL: "https://github.com/argoproj/argocd-example-apps.git"
-        targetRevision: HEAD
-        helm:
-          parameters: # override any values in a values.yaml
-            - name: “service.type”
-              value: “LoadBalancer”
-            - name: “image.tag”
-              value: “v2”
-```
-- File parameters
-```yml
-    source:
-        path: helm guestbook
-        repoURL: "https://github.com/argoproj/argocd-example-apps.git"
-        targetRevision: HEAD
-        helm:
-          fileParameters: # set parameter values from a file
-            - name: config
-              value: files/config.json
-```
-- Values as block file.
-```yml
-    source:
-        path: helm guestbook
-        repoURL: "https://github.com/argoproj/argocd-example-apps.git"
-        targetRevision: HEAD
-        helm:
-          values: |
-            ingress:
-                enabled: true
-                path: /
-                hosts:
-                - mydomain.example.com
-```
 
-### Create helm tools application
-- Create app
+    ### ArgoCD provies the below for options
+    1. **Release name**
+    ### By default release name is application, but override release name (defaults to application name)
+    ```yml
+        source:
+            path: helm guestbook
+            repoURL: "https://github.com/argoproj/argocd-example-apps.git"
+            targetRevision: HEAD
+            helm:
+                releaseName: # override release name (defaults to application name)
+    ```
+    2. **Values files**
+    ### can set multi values files, (defaults to values.yaml in source repo)
+    ```yml
+        source:
+            path: helm guestbook
+            repoURL: "https://github.com/argoproj/argocd-example-apps.git"
+            targetRevision: HEAD
+            helm:
+              valuesFiles: # can set multi values files, (defaults to values.yaml in source repo)
+                - values-prod.yaml
+    ```
+    3. Parameters
+    ### override any values in a values.yaml
+    ```yml
+        source:
+            path: helm guestbook
+            repoURL: "https://github.com/argoproj/argocd-example-apps.git"
+            targetRevision: HEAD
+            helm:
+              parameters: # override any values in a values.yaml
+                - name: “service.type”
+                  value: “LoadBalancer”
+                - name: “image.tag”
+                  value: “v2”
+    ```
+    4. File parameters
+    ### set parameter values from a file
+    ```yml
+        source:
+            path: helm guestbook
+            repoURL: "https://github.com/argoproj/argocd-example-apps.git"
+            targetRevision: HEAD
+            helm:
+              fileParameters: # set parameter values from a file
+                - name: config
+                  value: files/config.json
+    ```
+    5. Values as block file.
+    ### Write block file in values in applicationmanifest file
+    ```yml
+        source:
+            path: helm guestbook
+            repoURL: "https://github.com/argoproj/argocd-example-apps.git"
+            targetRevision: HEAD
+            helm:
+              values: |
+                ingress:
+                    enabled: true
+                    path: /
+                    hosts:
+                    - mydomain.example.com
+    ```
+
+## Create helm tools application
+1. Create app
 ```sh
-kubectl apply -f ./02-manifest-files/
+kubectl apply -f ./02-manifest-files/02-application.yaml
 ```
+2. Sync the application
+3. Now chnge the release name, by default release name is app name
+![alt text](image-19.png)
+4. Modify Application Manifest file, and add
+```
+helm:
+  releaseName: first-release
+```
+5. SYNCHRONIZE application with selecting PRUNE, which means delete and recreate with new release name
+![alt text](image-20.png)
+
+
 - By default release name is application name
 - change release name
 ##### add below code in spec.source
