@@ -18,9 +18,30 @@ kubectl apply -f https://github.com/argoproj/argo-cd/raw/stable/manifests/namesp
 kubectl get po -n argocd
 kubectl get secret -n argocd
 ```
+- **Check pods which should be created**
+```sh
+kubectl -n argocd get po
+
+# output should be
+argocd-application-controller-0                    1/1     Running   0          93s
+argocd-applicationset-controller-df44d7f64-7fb4q   1/1     Running   0          94s
+argocd-dex-server-554bd5ccd6-nhgz7                 1/1     Running   0          94s
+argocd-notifications-controller-64d548cb97-hsh2b   1/1     Running   0          94s
+argocd-redis-7b6b8b44bf-btchq                      1/1     Running   0          94s
+argocd-repo-server-89cb644f7-lttxv                 1/1     Running   0          94s
+argocd-server-7d979949f8-fvxdt                     1/1     Running   0          93s
+```
 
 - **Initial admin password is stored as a secret in argocd namespace**
 ```sh
+# Method 1
+# Get Password using argocd cli
+argocd admin initial-password -n argocd
+
+# Mwthod 2
+# check list of secret installed in argocd namespace
+kubectl -n argocd get secret
+
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 
 # for linux to convert base64 to string
