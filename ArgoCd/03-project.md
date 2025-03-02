@@ -1,6 +1,6 @@
 # Project
 
-### Projects provide a logical grouping of applications.
+#### Projects provide a logical grouping of applications.
 ### Useful when ArgoCD is used by multiple teams.
 - Allow only specific sources "trusted git repos"
 - Allow apps to be deployed into specific clusters and namespaces
@@ -10,9 +10,8 @@
 - CLI
 - Web UI
 
-#### Declarative approach
-1. Create yaml file
-- project.yaml
+1. Declarative approach
+### Create yaml file
 ```yml
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
@@ -23,20 +22,17 @@ spec:
   description: Dev project
   sourceRepos:
   - '*'
-
   destinations:
   - namespace: '*'
     server: '*'
-
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
-
   namespaceResourceWhitelist:
   - group: '*'
     kind: '*'
 ```
-- project.yaml for specific namespace and destination 
+### Create project for specific namespace and destination 
 ```yml
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
@@ -44,23 +40,41 @@ metadata:
   name: dev-project
   namespace: argocd
 spec:
-  description: Dev project
+  description: Learning project
   sourceRepos:
   - '*'
-
   destinations:
-  - namespace: ns-1
+  - namespace: ns-1 # Only permit this namespace
     server: "https://kubernetes.default.svc"
-
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
-
   namespaceResourceWhitelist:
   - group: '*'
     kind: '*'
 ```
-- project.yaml for Specific Source Repo
+### Creating project for Specific Source Repo
+```yml
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: dev-project
+  namespace: argocd
+spec:
+  description: Learning project
+  sourceRepos: # Only permit this Git repos
+    - "https://github.com/raghib1992/argocd-example-apps.git"
+  destinations:
+  - namespace: ns-1
+    server: "https://kubernetes.default.svc"
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'
+```
+### Create Project, Allow specific Cluster scoped resources
 ```yml
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
@@ -71,46 +85,17 @@ spec:
   description: Dev project
   sourceRepos: # Only permit this Git repos
     - "https://github.com/mabusaa/argocd-example-apps.git"
-
   destinations:
   - namespace: ns-1
     server: "https://kubernetes.default.svc"
-
-  clusterResourceWhitelist:
-  - group: '*'
-    kind: '*'
-
-  namespaceResourceWhitelist:
-  - group: '*'
-    kind: '*'
-```
-
-- Allow specific Cluster scoped resources
-```yml
-apiVersion: argoproj.io/v1alpha1
-kind: AppProject
-metadata:
-  name: dev-project
-  namespace: argocd
-spec:
-  description: Dev project
-  sourceRepos: # Only permit this Git repos
-    - "https://github.com/mabusaa/argocd-example-apps.git"
-
-  destinations:
-  - namespace: ns-1
-    server: "https://kubernetes.default.svc"
-
   clusterResourceWhitelist: # Deny all cluster scoped resources from being created, except for Namespace
   - group: '*'
     kind: 'Namespace'
-
   namespaceResourceWhitelist:
   - group: '*'
     kind: '*'
 ```
-
-- Allow specific Namespace scoped resources
+### Create Project, Allow specific Namespace scoped resources
 ```yml
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
@@ -121,21 +106,17 @@ spec:
   description: Dev project
   sourceRepos: # Only permit this Git repos
     - "https://github.com/mabusaa/argocd-example-apps.git"
-
   destinations:
   - namespace: ns-1
     server: "https://kubernetes.default.svc"
-
   clusterResourceWhitelist:
   - group: '*'
     kind: 'Namespace'
-
   namespaceResourceWhitelist:
   - group: 'apps'
     kind: 'Deployment'
 ```
-
-- Blacklist specific Namespace scoped resources
+### Create Project, Blacklist specific Namespace scoped resources
 ```yml
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
