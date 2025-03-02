@@ -17,12 +17,70 @@
 ## Create Application in docker-kubernetes using CLI Approach 
 ```sh
 # Create application app-2
-argocd app create shaheenbook--repo https://github.com/mabusaa/argocd-example-apps.git --revision master --path guestbook --dest-server https://kubernetes.default.svc --dest-namespace shaheen --sync-option CreateNamespace=true
+argocd app create shaheenbook --repo https://github.com/mabusaa/argocd-example-apps.git --revision master --path guestbook --dest-server https://kubernetes.default.svc --dest-namespace shaheen --sync-option CreateNamespace=true
+```
 
-# Sync application
-argocd app sync app-2
 
-# verify app
+# **Let Create first Application
+1. Create repo in github where we create manifest for k8s resources which will be deployed by argocd
+```t
+https://github.com/raghib1992/argocd-example-apps/guestbook
+```
+2. Create Argocd application Manifest files at folder **02-manifest-files**
+### application.yml
+```yml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata: 
+  name: guestbook
+  namespace: argocd
+spec: 
+  destination: 
+    namespace: guestbook
+    server: "https://kubernetes.default.svc"
+  project: default
+  source: 
+    path: guestbook
+    repoURL: "https://github.com/raghib1992/argocd-example-apps"
+    targetRevision: master
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+```
+3. Apply manifest file
+```
+kubectl apply -f 02-manifest-files/application.yml
+```
+4. CHeck for application resource created in ArgoCD
+```
+kubectl -n argocd get application
+
+# Output
+NAME       SYNC STATUS   HEALTH STATUS
+uzmabook   OutOfSync     Missing
+
+# ALso verify app by argocd cli
+argocd login <argocd host>
+argocd login localhost:8080
+username
+password
+
+argocd app list
+```
+5. Synchronize Application with github repo to argocd create k8s resource
+# By default ArgoCD doesn't Sync application
+```sh
+# Method 1
+# Using Argocd cli
+argocd app sync uzmabook
+
+# Method 2
+# From ArgoCD UI
+Click -> sync -> SHYNCHRONIZE
+```
+
+6. verify app
+```
 argocd app list
 ```
 
