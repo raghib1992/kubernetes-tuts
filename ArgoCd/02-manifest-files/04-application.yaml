@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata: 
+  name: kust-app
+  namespace: argocd
+spec: 
+  destination: 
+    namespace: kust-app
+    server: "https://kubernetes.default.svc"
+  project: default
+  source: 
+    path: kustomize-guestbook
+    repoURL: "https://github.com/raghib1992/argocd-example-apps.git"
+    targetRevision: master
+    kustomize:
+      namePrefix: ramzan
+      commonLabels:
+        app: roza
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
