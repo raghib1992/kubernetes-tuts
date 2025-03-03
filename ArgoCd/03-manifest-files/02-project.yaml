@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: prod-project
+  namespace: argocd
+spec:
+  description: Prod project
+  sourceRepos: # Only permit this Git repos
+    - "https://github.com/raghib1992/argocd-example-apps.git"
+  destinations:
+  - namespace: ns-1
+    server: "https://kubernetes.default.svc"
+  clusterResourceWhitelist: # Deny all cluster scoped resources from being created, except for Namespace
+  - group: '*'
+    kind: '*'
+  namespaceResourceWhitelist:
+  - group: 'apps'
+    kind: 'Deployment'
+  roles:
+  - name: ci-role
+    description: Sync privileges for demo project
+    policies:
+    - p, proj:prod-project:ci-role , applications, sync, prod-project/*, allow

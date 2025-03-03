@@ -155,17 +155,17 @@ kubectl apply -f 03-manifest-files/01-application.yml
 - You can use it to grant CI system a specific access to project applications.
 - It must be associated with JWT.
 - You can use it to grant oidc groups a specific access to project applications.
-
+### Create Project manifest files with ROles for sync only
 ```yml
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: dev-project
+  name: prod-project
   namespace: argocd
 spec:
-  description: Dev project
+  description: Prod project
   sourceRepos: # Only permit this Git repos
-    - "https://github.com/mabusaa/argocd-example-apps.git"
+    - "https://github.com/raghib1992/argocd-example-apps.git"
 
   destinations:
   - namespace: ns-1
@@ -173,23 +173,45 @@ spec:
 
   clusterResourceWhitelist: # Deny all cluster scoped resources from being created, except for Namespace
   - group: '*'
-    kind: 'Namespace'
+    kind: '*'
 
   namespaceResourceWhitelist:
   - group: 'apps'
     kind: 'Deployment'
   roles:
-  - name: ci role
+  - name: ci-role
     description: Sync privileges for demo project
     policies:
     - p, proj:demo project:ci role , applications, sync, demo project/*, allow
 ```
+### Create Project
+```sh
+kubectl apply -f 03-manifest-files/02-project.yaml
+```
+### Create Application
+```sh
+kubectl apply -f 03-manifest-files/02-application.yml
+```
+### Verify Project
+```sh
+kubectl -n argocd get appproj
+kubectl -n argocd describe appproj prod-project
+kubectl -n argocd get application prod-app
+``` 
 ### Creating a token
 - Project roles is not useful without generating a JWT.
 - Generated tokens are not stored in ArgoCD
 - To create a token using CLI 
-```
+```sh
 argocd proj role create-token PROJECT ROLE-NAME
+argocd proj role create-token prod-project ci-role
+
+# Output
+Create token succeeded for proj:prod-project:ci-role.
+  ID: 01b9d114-6a82-419a-ad65-ad3c3c2252f8
+  Issued At: 2025-03-03T20:32:16+05:30
+  Expires At: Never
+  Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhcmdvY2QiLCJzdWIiOiJwcm9qOnByb2QtcHJvamVjdDpjaS1yb2xlIiwibmJmIjoxNzQxMDE0MTM2LCJpYXQiOjE3NDEwMTQxMzYsImp0aSI6IjAxYjlkMTE0LTZhODItNDE5YS1hZDY1LWFkM2MzYzIyNTJmOCJ9.cT3SZU1e8_q_G0vCOC1X27IJqi7fNnboKiiUwANgj5I
 ```
 ##### Expected output:
 ```
@@ -197,6 +219,11 @@ argocd proj role create-token PROJECT ROLE-NAME
 ```
 ### Using the token in CLI
 - A user can leverage tokens in the cli by either passing them in using the auth token flag or setting the ARGOCD_AUTH_TOKEN environment variable. 
-```
-argocd cluster list --auth-token token-value
+```sh
+ARGOCD_AUTH_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhcmdvY2QiLCJzdWIiOiJwcm9qOnByb2QtcHJvamVjdDpjaS1yb2xlIiwibmJmIjoxNzQxMDE0MTM2LCJpYXQiOjE3NDEwMTQxMzYsImp0aSI6IjAxYjlkMTE0LTZhODItNDE5YS1hZDY1LWFkM2MzYzIyNTJmOCJ9.cT3SZU1e8_q_G0vCOC1X27IJqi7fNnboKiiUwANgj5I
+
+# Try to delete 
+argocd app delete prod-app --auth-token $ARGOCD_AUTH_TOKEN
+# Output
+FATA[0002] rpc error: code = PermissionDenied desc = permission denied
 ```
