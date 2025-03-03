@@ -140,8 +140,17 @@ spec:
   - group: '*'
     kind: NetworkPolicy
 ```
-
-## Project Roles Feature
+## Create Project and application in that project
+1. Create Project
+```
+kubectl apply -f 03-manifest-files/01-project.yaml
+```
+2. Create application in that project
+```
+kubectl apply -f 03-manifest-files/01-application.yml
+```
+***
+# Project Roles Feature
 - Enables you to create a role with set of policies “permissions” to grant access to a project's applications.
 - You can use it to grant CI system a specific access to project applications.
 - It must be associated with JWT.
