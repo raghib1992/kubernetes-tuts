@@ -8,7 +8,7 @@ spec:
   sourceRepos: # Only permit this Git repos
     - "https://github.com/raghib1992/argocd-example-apps.git"
   destinations:
-  - namespace: ns-1
+  - namespace: prod
     server: "https://kubernetes.default.svc"
   clusterResourceWhitelist: # Deny all cluster scoped resources from being created, except for Namespace
   - group: '*'

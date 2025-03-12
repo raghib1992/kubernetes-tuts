@@ -9,7 +9,7 @@ spec:
   - 'https://github.com/raghib1992/argocd-example-apps.git'
 
   destinations:
-  - namespace: 'ns-1'
+  - namespace: 'dev'
     server: 'https://kubernetes.default.svc'
 
   clusterResourceWhitelist:
@@ -19,3 +19,9 @@ spec:
   namespaceResourceWhitelist:
   - group: '*'
     kind: '*'
+  
+  roles:
+  - name: dev-role
+    description: Dev Project
+    policies:
+    - p, proj:dev-project:dev-role , applications, create,list,get, dev-project/*, allow
